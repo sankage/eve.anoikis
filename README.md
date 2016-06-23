@@ -1,24 +1,18 @@
-# README
+# Anoikis
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A wormhole mapping tool.
 
-Things you may want to cover:
+## Setup
 
-* Ruby version
+Create an application at https://developers.eveonline.com with a connection type
+of `CREST Access` and the scope of `characterLocationRead`.
 
-* System dependencies
+### Local
 
-* Configuration
+Create a `.env` file with the client id and secret:
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```
+# .env
+CLIENT_ID=asdfjaskjdfajksdf
+SECRET_KEY=a912je0asdu1nf9as
+```
