@@ -1,6 +1,6 @@
-h1 Anoikis
 
 p Anoikis is a mapping tool for wormhole space.
 
-- unless signed_in?
-  = link_to "Sign in w/ EVE SSO", signin_path
+- if signed_in?
+  p I see that you are currently located at #{current_user.location.name}.
+    Pick me up a donut please.

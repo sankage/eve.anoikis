@@ -6,4 +6,8 @@ class Pilot < ApplicationRecord
          refresh_token: credentials.refresh_token)
     pilot
   end
+
+  def location
+    ::Crest::Character.new(self).location
+  end
 end

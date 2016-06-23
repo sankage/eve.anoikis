@@ -1,0 +1,19 @@
+doctype html
+html
+  head
+    meta charset="utf-8"
+    title Anoikis
+    = csrf_meta_tags
+
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+  body
+    header
+      h1 Anoikis
+      nav
+        ul
+          - if signed_in?
+            li = link_to "Sign out", signout_path, method: :delete
+          - else
+            li = link_to "Sign in w/ EVE SSO", signin_path
+    == yield
