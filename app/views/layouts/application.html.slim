@@ -9,11 +9,16 @@ html
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   body
     header
-      h1 Anoikis
-      nav
-        ul
-          - if signed_in?
-            li = link_to "Sign out", signout_path, method: :delete
-          - else
-            li = link_to "Sign in w/ EVE SSO", signin_path
-    == yield
+      .container
+        h1 Anoikis
+        nav
+          ul
+            - if signed_in?
+              li = link_to "Sign out", signout_path, method: :delete
+            - else
+              li = link_to "Sign in w/ EVE SSO", signin_path
+    main
+      .container
+        - flash.each do |type, message|
+          div class="flash-#{type}" = message
+        == yield

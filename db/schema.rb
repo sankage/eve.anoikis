@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160623030624) do
+ActiveRecord::Schema.define(version: 20160704190620) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "connections", force: :cascade do |t|
+    t.integer  "signature_id"
+    t.integer  "matched_signature_id"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.index ["matched_signature_id"], name: "index_connections_on_matched_signature_id", using: :btree
+    t.index ["signature_id", "matched_signature_id"], name: "index_connections_on_signature_id_and_matched_signature_id", unique: true, using: :btree
+    t.index ["signature_id"], name: "index_connections_on_signature_id", using: :btree
+  end
 
   create_table "pilots", force: :cascade do |t|
     t.integer  "character_id"
@@ -24,4 +34,25 @@ ActiveRecord::Schema.define(version: 20160623030624) do
     t.datetime "updated_at",    null: false
   end
 
+  create_table "signatures", force: :cascade do |t|
+    t.integer  "solar_system_id"
+    t.string   "sig_id"
+    t.integer  "type"
+    t.integer  "group"
+    t.string   "name"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.index ["solar_system_id"], name: "index_signatures_on_solar_system_id", using: :btree
+  end
+
+  create_table "solar_systems", force: :cascade do |t|
+    t.integer  "system_id"
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "connections", "signatures"
+  add_foreign_key "connections", "signatures", column: "matched_signature_id"
+  add_foreign_key "signatures", "solar_systems"
 end

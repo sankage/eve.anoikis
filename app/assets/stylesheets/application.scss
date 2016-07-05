@@ -1,0 +1,35 @@
+@import 'bourbon';
+
+$max-width: 960px;
+@import 'neat';
+
+@import 'base/base';
+
+@import 'components/*';
+
+.container {
+  @include outer-container;
+}
+
+header {
+  h1 {
+    @include span-columns(3);
+  }
+  nav {
+    @include span-columns(9);
+  }
+}
+
+.signatures__list {
+  @include span-columns(6);
+}
+.signatures__form {
+  @include span-columns(6);
+}
+
+.small {
+  width: 15%;
+}
+.medium {
+  width: 25%;
+}

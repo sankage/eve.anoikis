@@ -3,4 +3,10 @@ Rails.application.routes.draw do
   get "/auth/:provider/callback", to: "sessions#create"
   get "/signin", to: "sessions#new"
   delete "/signout", to: "sessions#destroy"
+
+  resources :solar_systems, only: [:show], path: "systems"  do
+    resources :signatures, only: [:create, :destroy] do
+      post "batch_create", on: :collection
+    end
+  end
 end
