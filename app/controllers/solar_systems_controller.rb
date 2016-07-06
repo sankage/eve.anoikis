@@ -3,7 +3,7 @@ class SolarSystemsController < ApplicationController
   end
 
   def show
-    @system = SolarSystem.find_by(system_id: params[:id])
-    @signature = Signature.new
+    solar_system = SolarSystem.find_by(system_id: params[:id])
+    @system = SystemObject.new(solar_system)
   end
 end

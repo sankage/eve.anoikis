@@ -1,0 +1,8 @@
+- system.signatures.each do |sig|
+  tr
+    td = sig.sig_id.first(3)
+    td = sig.type.titleize
+    td = sig.group.titleize
+    td = sig.name
+    td = link_to "✖", solar_system_signature_path(system.system, sig.id),
+         method: :delete

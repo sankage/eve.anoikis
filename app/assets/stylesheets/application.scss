@@ -20,16 +20,9 @@ header {
   }
 }
 
-.signatures__list {
-  @include span-columns(6);
-}
-.signatures__form {
-  @include span-columns(6);
-}
-
 .small {
-  width: 15%;
+  width: 6%;
 }
 .medium {
-  width: 25%;
+  width: 17%;
 }

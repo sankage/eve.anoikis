@@ -6,14 +6,12 @@ $(window).on "paste", (event) ->
     (event.originalEvent || event).clipboardData.getData('text/plain')
   return unless data
   signatures = process_clipboard_data(data)
-  ajax = $.ajax
+  $.ajax
     url: "#{window.location.href}/signatures/batch_create.json"
     method: "POST"
     data: JSON.stringify { signatures: signatures }
     dataType: 'json'
     contentType: 'application/json'
-  ajax.done (data) ->
-    console.log data
 
 
 process_clipboard_data = (data) ->

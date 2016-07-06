@@ -11,9 +11,13 @@ class SignaturesController < ApplicationController
   end
 
   def batch_create
-    signatures = Signature.create_from_collection(params[:solar_system_id],
-                                                  params[:signatures])
-    render json: signatures
+    solar_system = SolarSystem.find_by(system_id: params[:solar_system_id])
+    solar = SystemObject.new(solar_system)
+    Signature.create_from_collection(solar_system, params[:signatures])
+    ActionCable.server.broadcast 'signatures',
+      signatures: SignaturesController.render(partial: 'signatures/table_rows',
+                                               locals: { system: solar })
+    render json: { success: true }
   end
 
   def destroy

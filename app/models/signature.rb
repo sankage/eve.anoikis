@@ -1,8 +1,7 @@
 class Signature < ApplicationRecord
   self.inheritance_column = nil
 
-  def self.create_from_collection(system_id, signatures)
-    solar_system = SolarSystem.find_by(system_id: system_id)
+  def self.create_from_collection(solar_system, signatures)
     signatures.each do |sig|
       signature = where(sig_id: sig['sig_id'],
                solar_system_id: solar_system.id).first_or_create do |s|
