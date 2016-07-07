@@ -1,19 +1,19 @@
 h2 = @system.name
 
 div.signatures
-  = form_for [@system.system, @system.new_sig] do |form|
-    table
-      thead
-        tr
-          th.small Sig ID
-          th.medium Type
-          th.medium Group
-          th Name
-          th.medium Options
-      tbody
-        = render partial: "signatures/table_rows", locals: { system: @system }
-      tfoot
-        tr
+  table
+    thead
+      tr
+        th.small Sig ID
+        th.medium Type
+        th.medium Group
+        th Name
+        th.medium Options
+    tbody
+      = render partial: "signatures/table_rows", locals: { system: @system }
+    tfoot
+      tr
+        = form_for [@system.system, @system.new_sig] do |form|
           td = form.text_field :sig_id
           td = form.select :type, Signature.types.keys
           td = form.select :group, Signature.groups.keys

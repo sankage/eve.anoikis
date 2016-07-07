@@ -26,3 +26,9 @@ process_clipboard_data = (data) ->
       strength: parts[4]
       distance: parts[5]
     }
+
+$(document).on "click", "[data-trigger]", (event) ->
+  event.preventDefault()
+  sig_id = $(this).data('trigger')
+  $(".signatures--edit[data-signature-id=\"#{sig_id}\"]").toggle()
+  $(".signatures--show[data-signature-id=\"#{sig_id}\"]").toggle()

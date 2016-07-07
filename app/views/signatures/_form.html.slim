@@ -1,0 +1,14 @@
+= form_for [signature.solar_system, signature] do |form|
+  = form.label :sig_id
+  = form.text_field :sig_id
+  
+  = form.label :type
+  = form.select :type, Signature.types.keys
+  
+  = form.label :group
+  = form.select :group, Signature.groups.keys
+  
+  = form.label :name
+  = form.text_field :name
+  
+  = form.submit

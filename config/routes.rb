@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   delete "/signout", to: "sessions#destroy"
 
   resources :solar_systems, only: [:show], path: "systems"  do
-    resources :signatures, only: [:create, :destroy] do
+    resources :signatures, only: [:create, :destroy, :edit, :update] do
       post "batch_create", on: :collection
     end
   end
