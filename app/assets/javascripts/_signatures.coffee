@@ -1,4 +1,5 @@
 $(window).on "paste", (event) ->
+  return if event.target.tagName.toLowerCase() is 'input'
   event.preventDefault()
   data = if window.clipboardData
     window.clipboardData.getData("Text")
@@ -6,6 +7,7 @@ $(window).on "paste", (event) ->
     (event.originalEvent || event).clipboardData.getData('text/plain')
   return unless data
   signatures = process_clipboard_data(data)
+  return if signatures[0].sig_id.length isnt 7
   $.ajax
     url: "#{window.location.href}/signatures/batch_create.json"
     method: "POST"

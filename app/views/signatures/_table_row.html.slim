@@ -3,7 +3,7 @@ tr.signatures--show data-signature-id=sig.id
   td = sig.type&.titleize
   td = sig.group&.titleize
   td
-    - if sig.connection
+    - if sig.matched_signature
       = link_to sig.name, solar_system_path(sig.matched_signature.solar_system)
     - else
       = sig.name
@@ -13,7 +13,7 @@ tr.signatures--show data-signature-id=sig.id
     = link_to "edit", '', data: { trigger: sig.id }
 tr.signatures--edit data-signature-id=sig.id
   = form_for [sig.solar_system, sig], remote: true do |form|
-    td = sig.sig_id&.first(3) || "???"
+    td = sig.sig_id&.first(3) || form.text_field(:sig_id)
     td = form.select :type, Signature.types.keys
     td = form.select :group, Signature.groups.keys
     td = form.text_field :name, list: "systems"

@@ -21,4 +21,8 @@ class Connection < ApplicationRecord
   def inverse_match_options
     { matched_signature_id: signature_id, signature_id: matched_signature_id }
   end
+
+  def create_inverse
+    self.class.create(inverse_match_options)
+  end
 end

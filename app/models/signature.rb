@@ -40,12 +40,13 @@ class Signature < ApplicationRecord
       conn = Connection.where(signature_id: id).first_or_create
       if conn.matched_signature.nil?
         desto_system = SolarSystem.find_by(name: name)
+        return if desto_system.nil?
         sig = Signature.create(solar_system_id: desto_system.id,
                                           type: :cosmic_signature,
                                          group: :wormhole,
                                           name: solar_system.name)
         conn.update(matched_signature_id: sig.id)
-        Connection.create(signature_id: sig.id, matched_signature_id: id)
+        conn.create_inverse
       end
     end
   end
