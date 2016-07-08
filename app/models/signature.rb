@@ -36,7 +36,7 @@ class Signature < ApplicationRecord
                 :combat_site ]
 
   def create_connections(solar_system)
-    if !name.empty? && name != "Unstable Wormhole"
+    if wormhole? && !name.empty? && name != "Unstable Wormhole"
       conn = Connection.where(signature_id: id).first_or_create
       if conn.matched_signature.nil?
         desto_system = SolarSystem.find_by(name: name)

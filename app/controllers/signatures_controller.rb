@@ -3,6 +3,7 @@ class SignaturesController < ApplicationController
     solar_system = SolarSystem.find_by(system_id: params[:solar_system_id])
     signature = solar_system.signatures.build(sig_params)
     if signature.save
+      signature.create_connections(solar_system)
       flash[:success] = "Signature added."
     else
       flash[:error] = "Signature not added."
