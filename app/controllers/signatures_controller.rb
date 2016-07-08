@@ -12,8 +12,10 @@ class SignaturesController < ApplicationController
 
   def batch_create
     solar_system = SolarSystem.find_by(system_id: params[:solar_system_id])
+    Signature.create_from_collection(solar_system.id,
+                                     params[:signatures])
+    solar_system = SolarSystem.find_by(system_id: params[:solar_system_id])
     solar = SystemObject.new(solar_system)
-    Signature.create_from_collection(solar_system, params[:signatures])
     ActionCable.server.broadcast 'signatures',
       signatures: SignaturesController.render(partial: 'signatures/table_rows',
                                                locals: { system: solar })
@@ -28,6 +30,8 @@ class SignaturesController < ApplicationController
     solar_system = SolarSystem.find_by(system_id: params[:solar_system_id])
     signature = Signature.find_by(id: params[:id])
     if signature.update(sig_params)
+      signature.create_connections(solar_system)
+
       ActionCable.server.broadcast 'signatures',
         signature_id: signature.id,
         signature: SignaturesController.render(partial: 'signatures/table_row',
@@ -42,8 +46,9 @@ class SignaturesController < ApplicationController
 
   def destroy
     sig = Signature.find_by(id: params[:id])
+    sig.connection.destroy if sig.connection
     sig.destroy
-    redirect_to :back
+    redirect_to sig.solar_system
   end
 
   private

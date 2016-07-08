@@ -13,7 +13,7 @@ class SystemObject
   end
 
   def signatures
-    @signatures ||= @system.signatures.order(:sig_id)
+    @signatures ||= @system.signatures.includes(:connection).order(:sig_id)
   end
 
   def new_sig

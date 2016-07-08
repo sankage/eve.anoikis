@@ -1,18 +1,22 @@
 tr.signatures--show data-signature-id=sig.id
-  td = sig.sig_id.first(3)
-  td = sig.type.titleize
-  td = sig.group.titleize
-  td = sig.name
+  td = sig.sig_id&.first(3) || "???"
+  td = sig.type&.titleize
+  td = sig.group&.titleize
+  td
+    - if sig.connection
+      = link_to sig.name, solar_system_path(sig.matched_signature.solar_system)
+    - else
+      = sig.name
   td
     = link_to "✖", solar_system_signature_path(sig.solar_system, sig.id),
       method: :delete
     = link_to "edit", '', data: { trigger: sig.id }
 tr.signatures--edit data-signature-id=sig.id
   = form_for [sig.solar_system, sig], remote: true do |form|
-    td = sig.sig_id.first(3)
+    td = sig.sig_id&.first(3) || "???"
     td = form.select :type, Signature.types.keys
     td = form.select :group, Signature.groups.keys
-    td = form.text_field :name
+    td = form.text_field :name, list: "systems"
     td
       = form.submit "Update Sig"
       = link_to "cancel", '', data: { trigger: sig.id }

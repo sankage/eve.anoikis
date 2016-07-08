@@ -1,15 +1,24 @@
 class Signature < ApplicationRecord
   self.inheritance_column = nil
 
-  def self.create_from_collection(solar_system, signatures)
+  def self.create_from_collection(solar_system_id, signatures)
     signatures.each do |sig|
       signature = where(sig_id: sig['sig_id'],
-               solar_system_id: solar_system.id).first_or_create do |s|
+               solar_system_id: solar_system_id).first_or_create do |s|
         s.type = sig['type'].downcase.gsub(' ', '_').to_sym if sig['type']
         s.group = sig['group'].downcase.gsub(' ', '_').to_sym if sig['group']
         s.name = sig['name']
       end
-      signature.update(name: sig['name'])
+
+      updatable_things = {
+        group: sig['group']&.downcase.gsub(' ', '_').to_sym
+      }
+
+      unless updatable_things[:group] == :wormhole
+        updatable_things[:name] = sig["name"]
+      end
+
+      signature.update(updatable_things)
     end
   end
 
@@ -25,4 +34,19 @@ class Signature < ApplicationRecord
                 :gas_site,
                 :ore_site,
                 :combat_site ]
+
+  def create_connections(solar_system)
+    if !name.empty? && name != "Unstable Wormhole"
+      conn = Connection.where(signature_id: id).first_or_create
+      if conn.matched_signature.nil?
+        desto_system = SolarSystem.find_by(name: name)
+        sig = Signature.create(solar_system_id: desto_system.id,
+                                          type: :cosmic_signature,
+                                         group: :wormhole,
+                                          name: solar_system.name)
+        conn.update(matched_signature_id: sig.id)
+        Connection.create(signature_id: sig.id, matched_signature_id: id)
+      end
+    end
+  end
 end
