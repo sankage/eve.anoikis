@@ -8,5 +8,6 @@ Rails.application.routes.draw do
     resources :signatures, only: [:create, :destroy, :edit, :update] do
       post "batch_create", on: :collection
     end
+    get "system_names", on: :collection
   end
 end

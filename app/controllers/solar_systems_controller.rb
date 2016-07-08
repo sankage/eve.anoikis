@@ -5,6 +5,10 @@ class SolarSystemsController < ApplicationController
   def show
     solar_system = SolarSystem.find_by(system_id: params[:id])
     @system = SystemObject.new(solar_system)
-    @systems = SolarSystem.order(:name)
+  end
+
+  def system_names
+    systems = SolarSystem.order(:name).pluck(:name)
+    render json: systems
   end
 end
