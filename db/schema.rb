@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160704190620) do
+ActiveRecord::Schema.define(version: 20160709043940) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20160704190620) do
     t.integer  "matched_signature_id"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
+    t.string   "wh_type"
     t.index ["matched_signature_id"], name: "index_connections_on_matched_signature_id", using: :btree
     t.index ["signature_id", "matched_signature_id"], name: "index_connections_on_signature_id_and_matched_signature_id", unique: true, using: :btree
     t.index ["signature_id"], name: "index_connections_on_signature_id", using: :btree
@@ -48,6 +49,16 @@ ActiveRecord::Schema.define(version: 20160704190620) do
   create_table "solar_systems", force: :cascade do |t|
     t.integer  "system_id"
     t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "wormhole_types", force: :cascade do |t|
+    t.string   "name"
+    t.bigint   "mass_total"
+    t.integer  "mass_jump"
+    t.integer  "mass_regen"
+    t.string   "leads_to"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

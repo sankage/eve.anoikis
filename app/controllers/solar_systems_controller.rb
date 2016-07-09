@@ -9,6 +9,7 @@ class SolarSystemsController < ApplicationController
 
   def system_names
     systems = SolarSystem.order(:name).pluck(:name)
-    render json: systems
+    wormhole_types = WormholeType.order(:name).pluck(:name)
+    render json: { systems: systems, wormhole_types: wormhole_types }
   end
 end

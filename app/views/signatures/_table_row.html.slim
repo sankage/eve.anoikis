@@ -3,6 +3,8 @@ tr.signatures--show data-signature-id=sig.id
   td = sig.type&.titleize
   td = sig.group&.titleize
   td
+    - if sig.connection
+      => sig.connection.wh_type
     - if sig.matched_signature
       = link_to sig.name, solar_system_path(sig.matched_signature.solar_system)
     - else
@@ -16,7 +18,10 @@ tr.signatures--edit data-signature-id=sig.id
     td = sig.sig_id&.first(3) || form.text_field(:sig_id)
     td = form.select :type, Signature.types.keys
     td = form.select :group, Signature.groups.keys
-    td = form.text_field :name, list: "systems"
+    td
+      - if sig.connection
+        = text_field_tag "connection[wh_type]", sig.connection.wh_type, list: "wormhole_types"
+      = form.text_field :name, list: "systems"
     td
       = form.submit "Update Sig"
       = link_to "cancel", '', data: { trigger: sig.id }

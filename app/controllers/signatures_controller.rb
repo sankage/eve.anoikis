@@ -31,7 +31,7 @@ class SignaturesController < ApplicationController
     solar_system = SolarSystem.find_by(system_id: params[:solar_system_id])
     signature = Signature.find_by(id: params[:id])
     if signature.update(sig_params)
-      signature.create_connections(solar_system)
+      signature.create_connections(solar_system, params[:connection])
 
       ActionCable.server.broadcast 'signatures',
         signature_id: signature.id,

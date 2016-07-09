@@ -7,7 +7,6 @@ class Signature < ApplicationRecord
                solar_system_id: solar_system_id).first_or_create do |s|
         s.type = sig['type'].downcase.gsub(' ', '_').to_sym if sig['type']
         s.group = sig['group'].downcase.gsub(' ', '_').to_sym if sig['group']
-        s.name = sig['name']
       end
 
       updatable_things = {
@@ -19,6 +18,9 @@ class Signature < ApplicationRecord
       end
 
       signature.update(updatable_things)
+      if signature.wormhole? && signature.connection.nil?
+        signature.create_connections(signature.solar_system)
+      end
     end
   end
 
@@ -35,9 +37,10 @@ class Signature < ApplicationRecord
                 :ore_site,
                 :combat_site ]
 
-  def create_connections(solar_system)
-    if wormhole? && !name.empty? && name != "Unstable Wormhole"
+  def create_connections(solar_system, connection_param = nil)
+    if wormhole?
       conn = Connection.where(signature_id: id).first_or_create
+      conn.update_wh_type(connection_param)
       if conn.matched_signature.nil?
         desto_system = SolarSystem.find_by(name: name)
         return if desto_system.nil?

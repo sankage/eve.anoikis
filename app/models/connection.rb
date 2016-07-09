@@ -25,4 +25,13 @@ class Connection < ApplicationRecord
   def create_inverse
     self.class.create(inverse_match_options)
   end
+
+  def update_wh_type(connection_param)
+    if connection_param && wh_type.nil?
+      update(wh_type: connection_param[:wh_type])
+      if connection_param[:wh_type] != "K162"
+        inverse.update(wh_type: "K162")
+      end
+    end
+  end
 end
