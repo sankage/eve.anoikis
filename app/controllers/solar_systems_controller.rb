@@ -5,6 +5,7 @@ class SolarSystemsController < ApplicationController
   def show
     solar_system = SolarSystem.find_by(system_id: params[:id])
     @system = SystemObject.new(solar_system)
+    @ss = solar_system.map
   end
 
   def system_names
