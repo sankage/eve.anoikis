@@ -2,5 +2,12 @@
 p Anoikis is a mapping tool for wormhole space.
 
 - if signed_in?
-  p I see that you are currently located at #{current_user.location.name}.
-    Pick me up a donut please.
+  - if current_user.location.system_id.nil?
+    p Why are you not playing the game???
+  - else
+    p 
+      | I see that you are currently located at 
+      = link_to current_user.location.name, solar_system_path(current_user.location.system_id)
+      | . Pick me up a donut please.
+    
+  = link_to "Phoenix—J140112", solar_system_path(31000510)

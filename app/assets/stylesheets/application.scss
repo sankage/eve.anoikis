@@ -19,19 +19,3 @@ header {
     @include span-columns(9);
   }
 }
-
-.small {
-  width: 6%;
-}
-.medium {
-  width: 17%;
-}
-
-.signatures {
-  .signatures--show {
-
-  }
-  .signatures--edit {
-    display: none;
-  }
-}

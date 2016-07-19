@@ -1,11 +1,9 @@
 class SolarSystemsController < ApplicationController
-  def index
-  end
+  # before_action :signed_in_user
 
   def show
-    solar_system = SolarSystem.find_by(system_id: params[:id])
+    solar_system = SolarSystem.find_by(id: params[:id])
     @system = SystemObject.new(solar_system)
-    @ss = solar_system.map
   end
 
   def system_names

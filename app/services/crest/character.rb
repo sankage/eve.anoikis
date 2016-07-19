@@ -13,8 +13,8 @@ module Crest
     def location
       data = request("/characters/#{@pilot.character_id}/location/")
       return OpenStruct.new(id: nil, name: "<not online>") if data.empty?
-      OpenStruct.new(id: data["solarSystem"]["id"],
-                   name: data["solarSystem"]["name"])
+      OpenStruct.new(system_id: data["solarSystem"]["id"],
+                          name: data["solarSystem"]["name"])
     end
 
     private

@@ -1,6 +1,8 @@
 class SignaturesController < ApplicationController
+  # before_action :signed_in_user
+
   def create
-    solar_system = SolarSystem.find_by(system_id: params[:solar_system_id])
+    solar_system = SolarSystem.find_by(id: params[:solar_system_id])
     signature = solar_system.signatures.build(sig_params)
     if signature.save
       signature.create_connections(solar_system)
@@ -12,10 +14,9 @@ class SignaturesController < ApplicationController
   end
 
   def batch_create
-    solar_system = SolarSystem.find_by(system_id: params[:solar_system_id])
-    Signature.create_from_collection(solar_system.id,
+    Signature.create_from_collection(params[:solar_system_id],
                                      params[:signatures])
-    solar_system = SolarSystem.find_by(system_id: params[:solar_system_id])
+    solar_system = SolarSystem.find_by(id: params[:solar_system_id])
     solar = SystemObject.new(solar_system)
     ActionCable.server.broadcast 'signatures',
       signatures: SignaturesController.render(partial: 'signatures/table_rows',
@@ -28,7 +29,7 @@ class SignaturesController < ApplicationController
   end
 
   def update
-    solar_system = SolarSystem.find_by(system_id: params[:solar_system_id])
+    solar_system = SolarSystem.find_by(id: params[:solar_system_id])
     signature = Signature.find_by(id: params[:id])
     if signature.update(sig_params)
       signature.create_connections(solar_system, params[:connection])

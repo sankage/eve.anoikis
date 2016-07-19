@@ -1,6 +1,6 @@
 h2 = @system.name
 
-div.map#mapper data-map=@ss.to_json
+div.connection_map#mapper data-map=generate_map(@system.connection_map)
 
 div.signatures
   table

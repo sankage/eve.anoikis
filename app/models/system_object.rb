@@ -9,7 +9,11 @@ class SystemObject
   end
 
   def system_id
-    @system.system_id
+    @system.id
+  end
+
+  def connection_map
+    @system.connection_map
   end
 
   def signatures
