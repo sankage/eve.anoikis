@@ -10,4 +10,6 @@ Rails.application.routes.draw do
     end
     get "system_names", on: :collection
   end
+
+  mount ActionCable.server => "/cable"
 end
