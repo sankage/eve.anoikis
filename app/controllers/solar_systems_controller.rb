@@ -1,5 +1,5 @@
 class SolarSystemsController < ApplicationController
-  # before_action :signed_in_user
+  before_action :signed_in_user
 
   def show
     solar_system = SolarSystem.find_by(id: params[:id])

@@ -1,5 +1,5 @@
 class SignaturesController < ApplicationController
-  # before_action :signed_in_user
+  before_action :signed_in_user
 
   def create
     solar_system = SolarSystem.find_by(id: params[:solar_system_id])

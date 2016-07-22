@@ -7,10 +7,10 @@ class SessionsController < ApplicationController
     auth = request.env['omniauth.auth']
     pilot = Pilot.find_and_update(character_id: auth['uid'],
                                    credentials: auth['credentials'])
-    if pilot.nil?
-      flash[:alert] = "You are not authorized to be here."
-    else
+    if pilot&.is_member_of_alliance?
       sign_in pilot
+    else
+      flash[:alert] = "You are not authorized to be here."
     end
 
     redirect_to root_path

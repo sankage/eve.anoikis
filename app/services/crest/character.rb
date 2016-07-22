@@ -1,8 +1,7 @@
 module Crest
-
   class Character
     include HTTParty
-    base_uri "https://crest-tq.eveonline.com"
+    base_uri "https://crest-tq.eveonline.com/characters"
 
     def initialize(pilot, logger: Rails.logger)
       @pilot = pilot
@@ -11,10 +10,22 @@ module Crest
     end
 
     def location
-      data = request("/characters/#{@pilot.character_id}/location/")
+      data = request("/#{@pilot.character_id}/location/")
       return OpenStruct.new(id: nil, name: "<not online>") if data.empty?
       OpenStruct.new(system_id: data["solarSystem"]["id"],
                           name: data["solarSystem"]["name"])
+    end
+
+    def corporation
+      data = request("/#{@pilot.character_id}/")
+      OpenStruct.new(id: data["corporation"]["id"],
+                   name: data["corporation"]["name"],
+                   logo: data["corporation"]["logo"]["64x64"]["href"])
+    end
+
+    def name
+      data = request("/#{@pilot.character_id}/")
+      data["name"]
     end
 
     private
