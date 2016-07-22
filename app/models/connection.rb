@@ -29,10 +29,12 @@ class Connection < ApplicationRecord
   def update_wh_type(connection_param)
     if connection_param
       update(connection_param)
-      if connection_param[:wh_type] != "K162"
-        inverse.update(wh_type: "K162")
-      else
-        inverse.update(wh_type: nil)
+      if inverse
+        if connection_param[:wh_type] != "K162"
+          inverse.update(wh_type: "K162")
+        else
+          inverse.update(wh_type: nil)
+        end
       end
     end
   end
