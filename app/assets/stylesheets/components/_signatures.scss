@@ -1,9 +1,5 @@
 .signatures {
   .signatures--show {
-
-  }
-  .signatures--edit {
-    display: none;
   }
 }
 
@@ -12,4 +8,21 @@
 }
 .medium {
   width: 17%;
+}
+
+.signatures--edit {
+  display: none;
+  dl {
+    dt {
+      @include span-columns(2);
+      text-align: right;
+    }
+    dd {
+      @include span-columns(10);
+      @include omega;
+    }
+  }
+  .options {
+    @include shift(2);
+  }
 }

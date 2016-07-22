@@ -38,7 +38,6 @@ class SignaturesController < ApplicationController
         signature_id: signature.id,
         signature: SignaturesController.render(partial: 'signatures/table_row',
                                                 locals: { sig: signature })
-    else
     end
     respond_to do |format|
       format.json { render json: { success: true } }

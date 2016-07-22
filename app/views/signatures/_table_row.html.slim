@@ -14,14 +14,20 @@ tr.signatures--show data-signature-id=sig.id
       method: :delete
     = link_to "edit", '', data: { trigger: sig.id }
 tr.signatures--edit data-signature-id=sig.id
-  = form_for [sig.solar_system, sig], remote: true do |form|
-    td = sig.sig_id&.first(3) || form.text_field(:sig_id)
-    td = form.select :type, Signature.types.keys
-    td = form.select :group, Signature.groups.keys
-    td
-      - if sig.connection
-        = text_field_tag "connection[wh_type]", sig.connection.wh_type, list: "wormhole_types"
-      = form.text_field :name, list: "systems"
-    td
-      = form.submit "Update Sig"
-      = link_to "cancel", '', data: { trigger: sig.id }
+  td colspan="5"
+    = form_for [sig.solar_system, sig], remote: true do |form|
+      dl
+        dt Sig ID
+        dd = sig.sig_id&.first(3) || form.text_field(:sig_id)
+        dt Type
+        dd = form.select :type, Signature.types.keys
+        dt Group
+        dd = form.select :group, Signature.groups.keys
+        - if sig.connection
+          dt Wormhole Type
+          dd = text_field_tag "connection[wh_type]", sig.connection.wh_type, list: "wormhole_types"
+        dt Name
+        dd = form.text_field :name, list: "systems"
+      div.options
+        => form.submit "Update Sig"
+        =< link_to "cancel", '', data: { trigger: sig.id }
