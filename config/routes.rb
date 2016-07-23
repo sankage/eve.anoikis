@@ -11,5 +11,7 @@ Rails.application.routes.draw do
     get "system_names", on: :collection
   end
 
+  get "pilot_locations", to: "pilots#locations"
+
   mount ActionCable.server => "/cable"
 end

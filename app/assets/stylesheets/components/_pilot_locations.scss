@@ -1,0 +1,15 @@
+.pilot_locations {
+  display: none;
+}
+.pilot_locations--list {
+  color: #fdfdfd;
+  h2 {
+    border-bottom: 1px solid #fdfdfd;
+    text-align: right;
+    padding: 0.5em;
+    margin-bottom: 0.5em
+  }
+  li {
+    padding: 0 0.5em;
+  }
+}

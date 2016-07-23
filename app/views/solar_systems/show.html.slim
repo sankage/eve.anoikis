@@ -21,3 +21,8 @@ div.signatures
           td = form.select :group, Signature.groups.keys
           td = form.text_field :name, list: "systems"
           td = form.submit "Create Sig"
+
+div.pilot_locations
+  button.sliding-panel-button type="button" Click for pilot locations
+  div.sliding-panel-content.pilot_locations--list
+  div.sliding-panel-fade-screen
