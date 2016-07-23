@@ -16,6 +16,10 @@ class SystemObject
     @system.connection_map
   end
 
+  def effect
+    @system.effect || "no system effect"
+  end
+
   def signatures
     @signatures ||= @system.signatures.includes(:connection).order(:sig_id)
   end

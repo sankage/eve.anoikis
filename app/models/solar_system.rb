@@ -4,7 +4,13 @@ class SolarSystem < ApplicationRecord
   def connection_map
     self.class.connection.select_all(%Q{
       WITH RECURSIVE "map" AS (
-        SELECT "id", 0 AS "parent_id", "name", "wormhole_class", "security"
+        SELECT
+          "id",
+          0 AS "parent_id",
+          "name",
+          "wormhole_class",
+          "security",
+          "effect"
         FROM "solar_systems"
         WHERE "solar_systems"."id" = #{id}
         UNION
@@ -13,7 +19,8 @@ class SolarSystem < ApplicationRecord
           "map"."id" AS "parent_id",
           "solar_systems"."name",
           "solar_systems"."wormhole_class",
-          "solar_systems"."security"
+          "solar_systems"."security",
+          "solar_systems"."effect"
         FROM "solar_systems"
         INNER JOIN "signatures" AS "matched_sigs"
                 ON "matched_sigs"."solar_system_id" = "solar_systems"."id"

@@ -12,6 +12,7 @@ module SolarSystemsHelper
                    #{ss["name"]}
                  </a>
                </h2>
+               <div class="effect">#{ss["effect"]}</div>
              </div>
              NODE
         },
