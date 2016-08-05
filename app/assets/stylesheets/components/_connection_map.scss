@@ -4,7 +4,22 @@
     font-weight: normal;
   }
   h3 {
-    font-size: 1em;
+    font-size: 0.9em;
     font-weight: normal;
   }
+  .effect {
+    font-size: 0.9em;
+  }
+
+  .node {
+    vertical-align: top;
+    border-bottom: 0;
+    padding: 0;
+  }
+  .node__information {
+    background-color: $color-nodes;
+  }
+  .node__information--hs {}
+  .node__information--ls {}
+  .node__information--ns {}
 }

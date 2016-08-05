@@ -5,13 +5,18 @@ module SolarSystemsHelper
         {
           v: "#{ss["id"]}",
           f: <<~NODE
-             <div class="node" data-node="#{ss["id"]}">
-               <h3 class="wh_class">#{system_class(wh_class: ss["wormhole_class"], security: ss["security"])}</h3>
+             <div class="node__information node__information--#{system_class(wh_class: ss["wormhole_class"], security: ss["security"]).downcase}"
+                  data-node="#{ss["id"]}">
+               <h3 class="wh_class">
+                 .#{system_class(wh_class: ss["wormhole_class"], security: ss["security"])}
+                 <span class="sig_id">[#{(ss["sig_id"] || "???").first(3)}]</span>
+               </h3>
                <h2>
                  <a href="/systems/#{ss["id"]}">
                    #{ss["name"]}
                  </a>
                </h2>
+
                <div class="effect">#{ss["effect"]}</div>
              </div>
              NODE

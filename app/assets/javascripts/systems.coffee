@@ -9,7 +9,11 @@ anoikis.drawChart = ->
   data.addRows($("#mapper").data("map"))
 
   anoikis.chart = new google.visualization.OrgChart(document.getElementById('mapper'))
-  anoikis.chart.draw(data, { allowHtml: true })
+  anoikis.chart.draw(data, {
+    allowHtml: true,
+    allowCollapse: true,
+    nodeClass: "node",
+    selectedNodeClass: "node--selected" })
 
 $(document).on "turbolinks:load", ->
   systems = $.ajax

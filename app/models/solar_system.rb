@@ -10,7 +10,8 @@ class SolarSystem < ApplicationRecord
           "name",
           "wormhole_class",
           "security",
-          "effect"
+          "effect",
+          ''::text AS "sig_id"
         FROM "solar_systems"
         WHERE "solar_systems"."id" = #{id}
         UNION
@@ -20,7 +21,8 @@ class SolarSystem < ApplicationRecord
           "solar_systems"."name",
           "solar_systems"."wormhole_class",
           "solar_systems"."security",
-          "solar_systems"."effect"
+          "solar_systems"."effect",
+          "signatures"."sig_id"
         FROM "solar_systems"
         INNER JOIN "signatures" AS "matched_sigs"
                 ON "matched_sigs"."solar_system_id" = "solar_systems"."id"
