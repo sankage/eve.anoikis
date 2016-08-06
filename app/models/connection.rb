@@ -1,6 +1,7 @@
 class Connection < ApplicationRecord
   belongs_to :signature, optional: true
   belongs_to :matched_signature, class_name: "Signature", optional: true
+  belongs_to :connection_status
 
   after_destroy :destroy_inverse, if: :has_inverse?
 
@@ -19,7 +20,9 @@ class Connection < ApplicationRecord
   end
 
   def inverse_match_options
-    { matched_signature_id: signature_id, signature_id: matched_signature_id }
+    { matched_signature_id: signature_id,
+      connection_status_id: connection_status_id,
+              signature_id: matched_signature_id }
   end
 
   def create_inverse

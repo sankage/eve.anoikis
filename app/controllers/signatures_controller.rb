@@ -33,6 +33,7 @@ class SignaturesController < ApplicationController
     signature = Signature.find_by(id: params[:id])
     if signature.update(sig_params)
       signature.create_connections(solar_system, connection_params)
+      signature.update_connection_status(connection_status_params)
 
       ActionCable.server.broadcast 'signatures',
         signature_id: signature.id,
@@ -60,5 +61,9 @@ class SignaturesController < ApplicationController
 
   def connection_params
     params.require(:connection).permit(:wh_type)
+  end
+
+  def connection_status_params
+    params.require(:connection_status).permit(:life, :mass)
   end
 end

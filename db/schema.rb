@@ -10,10 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160719034246) do
+ActiveRecord::Schema.define(version: 20160806043407) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "connection_statuses", force: :cascade do |t|
+    t.integer  "mass",       default: 0
+    t.integer  "life",       default: 0
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "connections", force: :cascade do |t|
     t.integer  "signature_id"
@@ -21,6 +28,8 @@ ActiveRecord::Schema.define(version: 20160719034246) do
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
     t.string   "wh_type"
+    t.integer  "connection_status_id"
+    t.index ["connection_status_id"], name: "index_connections_on_connection_status_id", using: :btree
     t.index ["matched_signature_id"], name: "index_connections_on_matched_signature_id", using: :btree
     t.index ["signature_id", "matched_signature_id"], name: "index_connections_on_signature_id_and_matched_signature_id", unique: true, using: :btree
     t.index ["signature_id"], name: "index_connections_on_signature_id", using: :btree
@@ -68,6 +77,7 @@ ActiveRecord::Schema.define(version: 20160719034246) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "connections", "connection_statuses"
   add_foreign_key "connections", "signatures"
   add_foreign_key "connections", "signatures", column: "matched_signature_id"
   add_foreign_key "signatures", "solar_systems"

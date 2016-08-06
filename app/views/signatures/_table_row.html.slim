@@ -9,12 +9,14 @@ tr.signatures--show data-signature-id=sig.id
       = link_to sig.name, solar_system_path(sig.matched_signature.solar_system)
     - else
       = sig.name
+  td = sig.connection_status&.life&.humanize
+  td = sig.connection_status&.mass&.humanize
   td
     = link_to "✖", solar_system_signature_path(sig.solar_system, sig.id),
       method: :delete
     = link_to "edit", '', data: { trigger: sig.id }
 tr.signatures--edit data-signature-id=sig.id
-  td colspan="5"
+  td colspan="7"
     = form_for [sig.solar_system, sig], remote: true do |form|
       dl
         dt Sig ID
@@ -28,6 +30,11 @@ tr.signatures--edit data-signature-id=sig.id
           dd = text_field_tag "connection[wh_type]", sig.connection.wh_type, list: "wormhole_types"
         dt Name
         dd = form.text_field :name, list: "systems"
+        - if sig.connection_status
+          dt Life
+          dd = select_tag "connection_status[life]", options_for_select(ConnectionStatus.human_life, sig.connection_status.life)
+          dt Mass
+          dd = select_tag "connection_status[mass]", options_for_select(ConnectionStatus.human_mass, sig.connection_status.mass)
       div.options
         => form.submit "Update Sig"
         =< link_to "cancel", '', data: { trigger: sig.id }

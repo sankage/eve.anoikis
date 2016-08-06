@@ -14,7 +14,9 @@ div.signatures
         th.medium Type
         th.medium Group
         th Name
-        th.medium Options
+        th.life Life
+        th.mass Mass
+        th.options Options
     tbody
       = render partial: "signatures/table_rows", locals: { system: @system }
     tfoot
@@ -24,6 +26,8 @@ div.signatures
           td = form.select :type, Signature.types.keys
           td = form.select :group, Signature.groups.keys
           td = form.text_field :name, list: "systems"
+          td
+          td
           td = form.submit "Create Sig"
 
 div.pilot_locations

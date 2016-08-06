@@ -40,6 +40,10 @@ class Signature < ApplicationRecord
   def create_connections(solar_system, connection_param = nil)
     if wormhole?
       conn = Connection.where(signature_id: id).first_or_create
+      if conn.connection_status.nil?
+        cs = ConnectionStatus.create
+        conn.update(connection_status: cs)
+      end
       conn.update_wh_type(connection_param)
       if conn.matched_signature.nil?
         desto_system = SolarSystem.find_by(name: name)
@@ -52,5 +56,13 @@ class Signature < ApplicationRecord
         conn.create_inverse
       end
     end
+  end
+
+  def connection_status
+    connection&.connection_status
+  end
+
+  def update_connection_status(params)
+    connection_status.update(params)
   end
 end
