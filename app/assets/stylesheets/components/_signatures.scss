@@ -6,9 +6,17 @@
   }
   .small {   width:  6%; }
   .medium {  width: 17%; }
+  .group {   width: 12%; }
+  .age {     width:  7%; }
   .life {    width: 10%; }
   .mass {    width: 15%; }
   .options { width:  7%; }
+  .active_time {
+    text-align: right;
+    font-family: 'Lucida Console', Monaco, monospace;
+    padding-right: 1em;
+    font-size: 0.9em;
+  }
 }
 
 .signatures--edit {

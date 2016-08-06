@@ -12,7 +12,8 @@ div.signatures
       tr
         th.small Sig ID
         th.medium Type
-        th.medium Group
+        th.group Group
+        th.age Age
         th Name
         th.life Life
         th.mass Mass
@@ -25,6 +26,7 @@ div.signatures
           td = form.text_field :sig_id
           td = form.select :type, Signature.types.keys
           td = form.select :group, Signature.groups.keys
+          td
           td = form.text_field :name, list: "systems"
           td
           td

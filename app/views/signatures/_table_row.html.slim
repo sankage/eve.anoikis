@@ -2,6 +2,7 @@ tr.signatures--show data-signature-id=sig.id
   td = sig.sig_id&.first(3) || "???"
   td = sig.type&.titleize
   td = sig.group&.titleize
+  td.active_time = time_diff(Time.now, sig.created_at)
   td
     - if sig.connection
       => sig.connection.wh_type
