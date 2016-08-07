@@ -6,7 +6,11 @@ anoikis.drawChart = ->
   data.addColumn('string', 'Name')
   data.addColumn('string', 'Parent')
 
-  data.addRows($("#mapper").data("map"))
+  rows = $("#mapper").data("map")
+  selected = $("#mapper").data("selected") + ""
+  for row in rows
+    row_index = data.addRow(row)
+    selected_row = row_index if row[0]["v"] is selected
 
   anoikis.chart = new google.visualization.OrgChart(document.getElementById('mapper'))
   anoikis.chart.draw(data, {
@@ -14,6 +18,7 @@ anoikis.drawChart = ->
     allowCollapse: true,
     nodeClass: "node",
     selectedNodeClass: "node--selected" })
+  anoikis.chart.setSelection([{ row: selected_row }])
 
 $(document).on "turbolinks:load", ->
   systems = $.ajax

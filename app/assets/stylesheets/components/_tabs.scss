@@ -1,0 +1,40 @@
+.tabs {
+  position: relative;
+  margin-bottom: 1em;
+  ul {
+    border-bottom: 1px solid $color-gray;
+  }
+  li {
+    display: inline-block;
+    padding: 0.25em 0.5em;
+    margin-bottom: -1px;
+    border: 1px solid transparent;
+    &.active {
+      border-color: $color-gray;
+      border-bottom-color: $color-background;
+    }
+  }
+  [for="new_tab_trigger"] {
+    margin-bottom: 0;
+    cursor: pointer;
+    font-weight: normal;
+  }
+}
+#new_tab_trigger {
+  display: none;
+  &:checked + .tabs__form {
+    display: block;
+  }
+}
+.tabs__form {
+  @include span-columns(4);
+  @include shift(4);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  background-color: tint($color-gray, 80%);
+  border: 1px solid $color-gray;
+  padding: 1em;
+  display: none;
+}

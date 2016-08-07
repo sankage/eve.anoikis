@@ -6,6 +6,8 @@ class Pilot < ApplicationRecord
     pilot
   end
 
+  has_many :tabs
+
   def location
     crest_character.location
   end
@@ -24,6 +26,10 @@ class Pilot < ApplicationRecord
       saved_name = crest_name
     end
     saved_name
+  end
+
+  def root_system
+    tabs.find_by(active: true)&.solar_system
   end
 
   private

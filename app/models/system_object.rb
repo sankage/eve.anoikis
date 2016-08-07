@@ -1,7 +1,8 @@
 class SystemObject
   attr_reader :system
-  def initialize(solar_system)
+  def initialize(solar_system, current_user)
     @system = solar_system
+    @current_user = current_user
   end
 
   def name
@@ -13,7 +14,7 @@ class SystemObject
   end
 
   def connection_map
-    @system.connection_map
+    (@current_user.root_system || @system).connection_map
   end
 
   def effect
@@ -34,5 +35,9 @@ class SystemObject
 
   def new_note
     Note.new
+  end
+
+  def new_tab
+    Tab.new
   end
 end

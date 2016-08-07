@@ -12,6 +12,10 @@ Rails.application.routes.draw do
     resources :notes, only: [:create, :destroy]
   end
 
+  resources :tabs, only: [:create, :destroy] do
+    get "switch", on: :member
+  end
+
   get "pilot_locations", to: "pilots#locations"
 
   mount ActionCable.server => "/cable"

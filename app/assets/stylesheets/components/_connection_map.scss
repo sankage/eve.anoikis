@@ -23,4 +23,8 @@
   .node__information--hs {}
   .node__information--ls {}
   .node__information--ns {}
+
+  .node--selected .node__information {
+    background-color: $color-node-selected;
+  }
 }

@@ -1,3 +1,23 @@
+
+div.tabs
+  ul
+    - current_user.tabs.each do |tab|
+      li class=("active" if tab.active?)
+        = link_to tab.name, switch_tab_path(tab)
+        =< link_to "✖", tab_path(tab), method: :delete,
+           data: { confirm: "Are you sure you want to delete this tab?" }
+    li 
+      label for="new_tab_trigger" Add Tab
+  input type="checkbox" id="new_tab_trigger"
+  div.tabs__form
+    = form_for @system.new_tab do |form|
+      = form.label :name
+      = form.text_field :name
+      = form.label :solar_system, "System"
+      = form.text_field :solar_system, list: "systems"
+      = form.submit
+    label for="new_tab_trigger" cancel
+
 div.solar_system__details
   h2 = @system.name
   dl
@@ -22,7 +42,7 @@ div.solar_system__notes
     = form.text_area :text
     = form.submit
 
-div.connection_map#mapper data-map=generate_map(@system.connection_map)
+div.connection_map#mapper data-map=generate_map(@system.connection_map) data-selected=@system.system_id
 
 div.signatures
   table

@@ -4,18 +4,20 @@ class SolarSystem < ApplicationRecord
 
   def connection_map
     self.class.connection.select_all(%Q{
-      WITH RECURSIVE "map" AS (
+      WITH RECURSIVE map(id, parent_id, name, wormhole_class, security, effect, sig_id, path, cycle) AS (
         SELECT
           "id",
-          0 AS "parent_id",
+          0,
           "name",
           "wormhole_class",
           "security",
           "effect",
-          ''::text AS "sig_id"
+          ''::text,
+          ARRAY["id"],
+          false
         FROM "solar_systems"
         WHERE "solar_systems"."id" = #{id}
-        UNION
+        UNION ALL
         SELECT
           "solar_systems"."id",
           "map"."id" AS "parent_id",
@@ -23,7 +25,9 @@ class SolarSystem < ApplicationRecord
           "solar_systems"."wormhole_class",
           "solar_systems"."security",
           "solar_systems"."effect",
-          "signatures"."sig_id"
+          "signatures"."sig_id",
+          path || "solar_systems"."id",
+          "solar_systems"."id" = ANY(path)
         FROM "solar_systems"
         INNER JOIN "signatures" AS "matched_sigs"
                 ON "matched_sigs"."solar_system_id" = "solar_systems"."id"
@@ -36,8 +40,9 @@ class SolarSystem < ApplicationRecord
         INNER JOIN "map"
                 ON "map"."id" = "base_systems"."id"
         WHERE "base_systems"."id" = "map"."id"
+          AND NOT cycle
       )
-      SELECT * FROM "map"
+      SELECT * FROM "map" WHERE NOT cycle ORDER BY sig_id
     }).to_hash
   end
 end

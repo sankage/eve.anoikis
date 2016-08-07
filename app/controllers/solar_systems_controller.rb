@@ -3,7 +3,7 @@ class SolarSystemsController < ApplicationController
 
   def show
     solar_system = SolarSystem.find_by(id: params[:id])
-    @system = SystemObject.new(solar_system)
+    @system = SystemObject.new(solar_system, current_user)
   end
 
   def system_names
