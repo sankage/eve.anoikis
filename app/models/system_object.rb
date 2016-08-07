@@ -27,4 +27,12 @@ class SystemObject
   def new_sig
     Signature.new
   end
+
+  def notes
+    @system.notes
+  end
+
+  def new_note
+    Note.new
+  end
 end

@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       post "batch_create", on: :collection
     end
     get "system_names", on: :collection
+    resources :notes, only: [:create, :destroy]
   end
 
   get "pilot_locations", to: "pilots#locations"

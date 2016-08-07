@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160806043407) do
+ActiveRecord::Schema.define(version: 20160806235319) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,16 @@ ActiveRecord::Schema.define(version: 20160806043407) do
     t.index ["matched_signature_id"], name: "index_connections_on_matched_signature_id", using: :btree
     t.index ["signature_id", "matched_signature_id"], name: "index_connections_on_signature_id_and_matched_signature_id", unique: true, using: :btree
     t.index ["signature_id"], name: "index_connections_on_signature_id", using: :btree
+  end
+
+  create_table "notes", force: :cascade do |t|
+    t.text     "text"
+    t.integer  "solar_system_id"
+    t.integer  "pilot_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.index ["pilot_id"], name: "index_notes_on_pilot_id", using: :btree
+    t.index ["solar_system_id"], name: "index_notes_on_solar_system_id", using: :btree
   end
 
   create_table "pilots", force: :cascade do |t|
@@ -80,5 +90,7 @@ ActiveRecord::Schema.define(version: 20160806043407) do
   add_foreign_key "connections", "connection_statuses"
   add_foreign_key "connections", "signatures"
   add_foreign_key "connections", "signatures", column: "matched_signature_id"
+  add_foreign_key "notes", "pilots"
+  add_foreign_key "notes", "solar_systems"
   add_foreign_key "signatures", "solar_systems"
 end

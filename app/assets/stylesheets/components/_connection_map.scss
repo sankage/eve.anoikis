@@ -1,4 +1,5 @@
 .connection_map {
+  @include fill-parent;
   h2 {
     font-size: 1em;
     font-weight: normal;

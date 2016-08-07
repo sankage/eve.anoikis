@@ -1,5 +1,6 @@
 class SolarSystem < ApplicationRecord
   has_many :signatures
+  has_many :notes
 
   def connection_map
     self.class.connection.select_all(%Q{
