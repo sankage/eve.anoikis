@@ -10,5 +10,7 @@ p Anoikis is a mapping tool for wormhole space.
       = link_to current_user.location.name, solar_system_path(current_user.location.system_id)
       | . Pick me up a donut please.
     
-  = link_to "Phoenix—J140112", solar_system_path(31000510)
-  = link_to "Hydra—J132532", solar_system_path(31001833)
+  ul
+    li = link_to "Hydra—J132532", solar_system_path(31001833)
+    li = link_to "Phoenix—J140112", solar_system_path(31000510)
+    
