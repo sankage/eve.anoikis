@@ -1,7 +1,7 @@
 class SystemObject
   attr_reader :system
   def initialize(solar_system_id, current_user)
-    @system = SolarSystem.includes(:notes).find_by(id: solar_system_id)
+    @system = SolarSystem.includes(:notes, :wormhole_types).find_by(id: solar_system_id)
     @current_user = current_user
   end
 
@@ -40,5 +40,9 @@ class SystemObject
 
   def new_tab
     Tab.new
+  end
+
+  def statics
+    @system.wormhole_types
   end
 end

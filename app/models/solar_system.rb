@@ -1,6 +1,8 @@
 class SolarSystem < ApplicationRecord
   has_many :signatures
   has_many :notes
+  has_many :statics
+  has_many :wormhole_types, through: :statics
 
   def connection_map
     self.class.connection.select_all(%Q{

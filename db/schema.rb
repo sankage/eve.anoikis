@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160807031124) do
+ActiveRecord::Schema.define(version: 20160808012335) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -77,6 +77,15 @@ ActiveRecord::Schema.define(version: 20160807031124) do
     t.decimal  "security",       precision: 3, scale: 2
   end
 
+  create_table "statics", force: :cascade do |t|
+    t.integer  "solar_system_id"
+    t.integer  "wormhole_type_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["solar_system_id"], name: "index_statics_on_solar_system_id", using: :btree
+    t.index ["wormhole_type_id"], name: "index_statics_on_wormhole_type_id", using: :btree
+  end
+
   create_table "tabs", force: :cascade do |t|
     t.string   "name"
     t.boolean  "active",          default: false
@@ -104,6 +113,8 @@ ActiveRecord::Schema.define(version: 20160807031124) do
   add_foreign_key "notes", "pilots"
   add_foreign_key "notes", "solar_systems"
   add_foreign_key "signatures", "solar_systems"
+  add_foreign_key "statics", "solar_systems"
+  add_foreign_key "statics", "wormhole_types"
   add_foreign_key "tabs", "pilots"
   add_foreign_key "tabs", "solar_systems"
 end

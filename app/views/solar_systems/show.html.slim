@@ -21,10 +21,12 @@ div.tabs
 div.solar_system__details
   h2 = @system.name
   dl
-   dt System Effect
-   dd = @system.effect
-   dt Statics
-   dd >not implemented yet<
+    dt System Effect
+    dd = @system.effect
+    - if @system.statics
+      dt Statics
+      - @system.statics.each do |static|
+        dd = static.name
  
 div.solar_system__notes
   h2 Notes
