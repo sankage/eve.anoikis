@@ -4,7 +4,7 @@ module SessionsHelper
   end
 
   def current_user
-    @current_user ||= Pilot.find_by(id: session[:pilot_id])
+    @current_user ||= Pilot.includes(:tabs).find_by(id: session[:pilot_id])
   end
 
   def signed_in?

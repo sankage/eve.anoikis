@@ -1,7 +1,7 @@
 class SystemObject
   attr_reader :system
-  def initialize(solar_system, current_user)
-    @system = solar_system
+  def initialize(solar_system_id, current_user)
+    @system = SolarSystem.includes(:notes).find_by(id: solar_system_id)
     @current_user = current_user
   end
 
@@ -22,7 +22,8 @@ class SystemObject
   end
 
   def signatures
-    @signatures ||= @system.signatures.includes(:connection).order(:sig_id)
+    @signatures ||= @system.signatures.includes({ connection: :connection_status },
+                                                { matched_signature: :solar_system }).order(:sig_id)
   end
 
   def new_sig

@@ -29,7 +29,7 @@ class Pilot < ApplicationRecord
   end
 
   def root_system
-    tabs.find_by(active: true)&.solar_system
+    tabs.detect { |t| t.active? }&.solar_system
   end
 
   private
