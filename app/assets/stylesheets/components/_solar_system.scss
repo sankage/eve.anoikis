@@ -5,6 +5,12 @@
     @include span-columns(2 of 6);
     @include omega(3n);
   }
+  .effect--negative {
+    color: red;
+  }
+  .effect--positive {
+    color: green;
+  }
 }
 .solar_system__notes {
   @include span-columns(6);

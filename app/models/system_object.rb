@@ -18,7 +18,10 @@ class SystemObject
   end
 
   def effect
-    @system.effect || "no system effect"
+    {
+      name: @system.effect || "no system effect",
+      effects: WormholeEffect.new(@system.effect, @system.wormhole_class).effects
+    }
   end
 
   def wormhole?

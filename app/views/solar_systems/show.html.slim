@@ -23,7 +23,17 @@ div.solar_system__details
   dl
     - if @system.wormhole?
       dt System Effect
-      dd = @system.effect
+      dd.expander
+        - if @system.effect[:name] == "no system effect"
+          = @system.effect[:name]
+        - else
+          a.expander-trigger.expander-hidden href="javascript:void(0)" = @system.effect[:name]
+          div.expander-content
+            ul
+              - @system.effect[:effects].each do |effect|
+                li class="effect--#{effect[:good] ? "positive" : "negative"}"
+                  = effect[:name]
+                  =< effect[:effect]
     - unless @system.statics.empty?
       dt Statics
       - @system.statics.each do |static|
