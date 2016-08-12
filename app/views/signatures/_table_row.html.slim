@@ -15,7 +15,7 @@ tr.signatures--show data-signature-id=sig.id
   td
     = link_to "✖", solar_system_signature_path(sig.solar_system, sig.id),
       method: :delete
-    = link_to "edit", '', data: { trigger: sig.id }
+    =< link_to "edit", '', data: { trigger: sig.id }
 tr.signatures--edit data-signature-id=sig.id
   td colspan="7"
     = form_for [sig.solar_system, sig], remote: true do |form|
