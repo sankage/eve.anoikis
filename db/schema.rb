@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160808012335) do
+ActiveRecord::Schema.define(version: 20160811232710) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,13 +68,19 @@ ActiveRecord::Schema.define(version: 20160808012335) do
   create_table "solar_systems", force: :cascade do |t|
     t.integer  "system_id"
     t.string   "name"
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
     t.integer  "wormhole_class"
     t.string   "region"
     t.string   "constellation"
     t.string   "effect"
-    t.decimal  "security",       precision: 3, scale: 2
+    t.decimal  "security",            precision: 3, scale: 2
+    t.integer  "distance_to_jita"
+    t.integer  "distance_to_amarr"
+    t.integer  "distance_to_dodixie"
+    t.integer  "distance_to_rens"
+    t.integer  "distance_to_hek"
+    t.integer  "distance_to_stacmon"
   end
 
   create_table "statics", force: :cascade do |t|

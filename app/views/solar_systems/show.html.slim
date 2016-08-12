@@ -21,12 +21,21 @@ div.tabs
 div.solar_system__details
   h2 = @system.name
   dl
-    dt System Effect
-    dd = @system.effect
-    - if @system.statics
+    - if @system.wormhole?
+      dt System Effect
+      dd = @system.effect
+    - unless @system.statics.empty?
       dt Statics
       - @system.statics.each do |static|
         dd = static.name
+    - if @system.distances
+      dt Trade Hubs
+      dd
+        ul
+          - @system.distances.each do |name, distance|
+            li.distances
+              strong = name.titleize
+              | : #{distance}
  
 div.solar_system__notes
   h2 Notes

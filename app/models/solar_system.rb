@@ -47,4 +47,8 @@ class SolarSystem < ApplicationRecord
       SELECT * FROM "map" WHERE NOT cycle ORDER BY sig_id
     }).to_hash
   end
+
+  def distance_to(system_name)
+    public_send("distance_to_#{system_name}".to_sym)
+  end
 end

@@ -21,6 +21,10 @@ class SystemObject
     @system.effect || "no system effect"
   end
 
+  def wormhole?
+    @system.wormhole_class <= 6
+  end
+
   def signatures
     @signatures ||= @system.signatures.includes({ connection: :connection_status },
                                                 { matched_signature: :solar_system }).order(:sig_id)
@@ -44,5 +48,12 @@ class SystemObject
 
   def statics
     @system.wormhole_types
+  end
+
+  def distances
+    return nil if @system.distance_to_jita.nil?
+    %w[jita amarr dodixie rens hek stacmon].map { |name|
+      [name, @system.distance_to(name)]
+    }.to_h
   end
 end

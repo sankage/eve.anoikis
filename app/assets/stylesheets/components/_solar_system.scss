@@ -1,5 +1,10 @@
 .solar_system__details {
   @include span-columns(6);
+  margin-bottom: 2em;
+  .distances {
+    @include span-columns(2 of 6);
+    @include omega(3n);
+  }
 }
 .solar_system__notes {
   @include span-columns(6);
