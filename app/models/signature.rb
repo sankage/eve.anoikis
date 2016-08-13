@@ -37,25 +37,12 @@ class Signature < ApplicationRecord
                 :ore_site,
                 :combat_site ]
 
-  def create_connections(solar_system, connection_param = nil)
-    if wormhole?
-      conn = Connection.where(signature_id: id).first_or_create
-      if conn.connection_status.nil?
-        cs = ConnectionStatus.create
-        conn.update(connection_status: cs)
-      end
-      conn.update_wh_type(connection_param)
-      if conn.matched_signature.nil?
-        desto_system = SolarSystem.find_by(name: name)
-        return if desto_system.nil?
-        sig = Signature.create(solar_system_id: desto_system.id,
-                                          type: :cosmic_signature,
-                                         group: :wormhole,
-                                          name: solar_system.name)
-        conn.update(matched_signature_id: sig.id)
-        conn.create_inverse
-      end
-    end
+  def create_connections(solar_system, connection_params = nil)
+    return unless wormhole?
+    conn = Connection.where(signature_id: id).first_or_create
+    conn.create_connection_status
+    conn.update_wh_type(connection_params)
+    conn.create_matched_signature(name, solar_system.name)
   end
 
   def connection_status
@@ -63,6 +50,7 @@ class Signature < ApplicationRecord
   end
 
   def update_connection_status(params)
+    return if params.nil?
     connection_status.update(params)
   end
 end

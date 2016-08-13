@@ -63,7 +63,8 @@ div.solar_system__notes
     = form.text_area :text
     = form.submit
 
-div.connection_map#mapper data-map=generate_map(@system.connection_map) data-selected=@system.system_id
+div#mapper
+  = render partial: "connection_map", locals: { solar_system: @system }
 
 div.signatures
   table

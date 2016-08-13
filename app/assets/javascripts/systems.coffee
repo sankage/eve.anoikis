@@ -6,13 +6,15 @@ anoikis.drawChart = ->
   data.addColumn('string', 'Name')
   data.addColumn('string', 'Parent')
 
-  rows = $("#mapper").data("map")
-  selected = $("#mapper").data("selected") + ""
+  connection_map = $("#mapper .connection_map")
+
+  rows = connection_map.data("map")
+  selected = connection_map.data("selected") + ""
   for row in rows
     row_index = data.addRow(row)
     selected_row = row_index if row[0]["v"] is selected
 
-  anoikis.chart = new google.visualization.OrgChart(document.getElementById('mapper'))
+  anoikis.chart = new google.visualization.OrgChart(connection_map[0])
   anoikis.chart.draw(data, {
     allowHtml: true,
     allowCollapse: true,
@@ -48,3 +50,16 @@ $(document).on "turbolinks:load", ->
       divs.push(div)
     $(".pilot_locations--list").empty().append(divs)
     $(".pilot_locations").show()
+
+  $(".edit_signature").on "ajax:success", (e, data) ->
+    if data.signature_id
+      selector = $(".signatures [data-signature-id=\"#{data.signature_id}\"]")
+      index = selector.index()
+      selector.remove()
+      if $(".signatures tbody tr").length
+        $(".signatures tbody tr:eq(#{index})").before(data.signature)
+      else
+        $(".signatures tbody").append(data.signature)
+    if data.system_map
+      $("#mapper").empty().append(data.system_map)
+      anoikis.drawChart()

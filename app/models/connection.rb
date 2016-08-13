@@ -29,16 +29,33 @@ class Connection < ApplicationRecord
     self.class.create(inverse_match_options)
   end
 
-  def update_wh_type(connection_param)
-    if connection_param
-      update(connection_param)
-      if inverse
-        if connection_param[:wh_type] != "K162"
-          inverse.update(wh_type: "K162")
-        else
-          inverse.update(wh_type: nil)
-        end
+  def update_wh_type(connection_params)
+    return if connection_params.nil?
+    update(connection_params)
+    if inverse
+      if connection_params[:wh_type] != "K162"
+        inverse.update(wh_type: "K162")
+      else
+        inverse.update(wh_type: nil)
       end
     end
+  end
+
+  def create_connection_status
+    return unless connection_status.nil?
+    cs = ConnectionStatus.create
+    update(connection_status: cs)
+  end
+
+  def create_matched_signature(desto_name, source_name)
+    return unless matched_signature.nil?
+    desto_system = SolarSystem.find_by(name: desto_name)
+    return if desto_system.nil?
+    sig = Signature.create(solar_system_id: desto_system.id,
+                                      type: :cosmic_signature,
+                                     group: :wormhole,
+                                      name: source_name)
+    update(matched_signature_id: sig.id)
+    create_inverse
   end
 end
