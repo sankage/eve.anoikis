@@ -3,7 +3,7 @@ module Crest
     include HTTParty
     base_uri "https://crest-tq.eveonline.com/alliances"
 
-    def initialize(alliance_id: 99006117)
+    def initialize(alliance_id: ENV["ALLIANCE_ID"])
       @alliance_id = alliance_id
     end
 
