@@ -22,6 +22,25 @@ anoikis.drawChart = ->
     selectedNodeClass: "node--selected" })
   anoikis.chart.setSelection([{ row: selected_row }])
 
+anoikis.process_signature_json = (data) ->
+  if data.type is "signatures"
+    $(".signatures tbody").empty().append(data.signatures)
+  if data.signature_id
+    selector = $(".signatures [data-signature-id=\"#{data.signature_id}\"]")
+    index = selector.index()
+    selector.remove()
+    if $(".signatures tbody tr").length
+      new_current_row = $(".signatures tbody tr:eq(#{index})")
+      if new_current_row.length
+        new_current_row.before(data.signature)
+      else
+        $(".signatures tbody tr:eq(#{index-1})").after(data.signature)
+    else
+      $(".signatures tbody").append(data.signature)
+  if data.system_map
+    $("#mapper").empty().append(data.system_map)
+    anoikis.drawChart()
+
 $(document).on "turbolinks:load", ->
   systems = $.ajax
     url: "/systems/system_names.json"
@@ -52,14 +71,4 @@ $(document).on "turbolinks:load", ->
     $(".pilot_locations").show()
 
   $(".edit_signature").on "ajax:success", (e, data) ->
-    if data.signature_id
-      selector = $(".signatures [data-signature-id=\"#{data.signature_id}\"]")
-      index = selector.index()
-      selector.remove()
-      if $(".signatures tbody tr").length
-        $(".signatures tbody tr:eq(#{index})").before(data.signature)
-      else
-        $(".signatures tbody").append(data.signature)
-    if data.system_map
-      $("#mapper").empty().append(data.system_map)
-      anoikis.drawChart()
+    anoikis.process_signature_json(data)

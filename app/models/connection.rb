@@ -33,7 +33,7 @@ class Connection < ApplicationRecord
     return if connection_params.nil?
     update(connection_params)
     if inverse
-      if connection_params[:wh_type] != "K162"
+      if !connection_params[:wh_type].empty? && connection_params[:wh_type] != "K162"
         inverse.update(wh_type: "K162")
       else
         inverse.update(wh_type: nil)
@@ -57,5 +57,11 @@ class Connection < ApplicationRecord
                                       name: source_name)
     update(matched_signature_id: sig.id)
     create_inverse
+  end
+
+  def update_connection(name)
+    return if name.empty? || matched_signature.nil?
+    desto_system = SolarSystem.find_by(name: name)
+    Signature.find_by(id: matched_signature.id).update(solar_system_id: desto_system.id)
   end
 end

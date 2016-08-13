@@ -42,6 +42,7 @@ class Signature < ApplicationRecord
     conn = Connection.where(signature_id: id).first_or_create
     conn.create_connection_status
     conn.update_wh_type(connection_params)
+    conn.update_connection(name)
     conn.create_matched_signature(name, solar_system.name)
   end
 
@@ -50,7 +51,7 @@ class Signature < ApplicationRecord
   end
 
   def update_connection_status(params)
-    return if params.nil?
+    return if params.nil? || connection_status.nil?
     connection_status.update(params)
   end
 end
