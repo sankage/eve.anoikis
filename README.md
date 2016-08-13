@@ -18,3 +18,11 @@ CLIENT_ID=asdfjaskjdfajksdf
 SECRET_KEY=a912je0asdu1nf9as
 ALLIANCE_ID=1271293
 ```
+
+### Production
+
+Run the PilotLocationsJob have it find pilots' locations every 15 seconds.
+
+```bash
+RAILS_ENV=production bundle exec rake pilot_locator
+```

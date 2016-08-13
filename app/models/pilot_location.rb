@@ -1,5 +1,5 @@
 class PilotLocation
-  def initialize(pilots)
+  def initialize(pilots = Pilot.order(:name))
     @pilots = pilots
   end
 

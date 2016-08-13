@@ -16,7 +16,11 @@ Rails.application.routes.draw do
     get "switch", on: :member
   end
 
-  get "pilot_locations", to: "pilots#locations"
-
   mount ActionCable.server => "/cable"
+
+  require 'sidekiq/web'
+
+  constraints lambda {|request|  Pilot.find_by(id: request.session["pilot_id"])&.admin? } do
+    mount Sidekiq::Web => '/admin/sidekiq'
+  end
 end

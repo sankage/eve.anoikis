@@ -40,7 +40,8 @@ module Crest
       @pilot.update(token: token)
       @options[:headers][:Authorization] = "Bearer #{token}"
       retry if (tries -= 1) > 0
-      raise
+      @pilot.update(token: nil, refresh_token: nil)
+      []
     end
   end
 

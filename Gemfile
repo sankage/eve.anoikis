@@ -30,6 +30,7 @@ gem 'redis', '~> 3.0'
 # Use Capistrano for deployment
 gem 'capistrano-rails', group: :development
 gem 'capistrano-rbenv', group: :development
+gem 'capistrano-sidekiq', group: :development
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -56,3 +57,7 @@ gem 'slim', '~> 3.0', '>= 3.0.7'
 gem 'httparty', '~> 0.13.7'
 gem 'bourbon', '~> 5.0.0.beta.6'
 gem 'neat', '~> 1.8'
+
+gem 'sinatra', github: 'sinatra/sinatra'
+gem 'rack-protection', github: 'sinatra/rack-protection'
+gem 'sidekiq', '~> 4.1', '>= 4.1.4'

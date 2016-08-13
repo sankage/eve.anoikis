@@ -40,6 +40,18 @@ anoikis.process_signature_json = (data) ->
   if data.system_map
     $("#mapper").empty().append(data.system_map)
     anoikis.drawChart()
+  if data.type is "locations"
+    divs = []
+    $.each data.locations, (location, pilots) ->
+      div = $("<div />")
+      list = $("<ul></ul>")
+      $.each pilots, (_, pilot) ->
+        list.append("<li>#{pilot}</li>")
+      div.append("<h2>#{location}</h2>", list)
+      divs.push(div)
+    $(".pilot_locations--list").empty().append(divs)
+    $(".pilot_locations").show()
+
 
 $(document).on "turbolinks:load", ->
   systems = $.ajax
@@ -53,22 +65,6 @@ $(document).on "turbolinks:load", ->
     $("<datalist id='wormhole_types'></datalist>").append(options).appendTo("body")
 
   google.charts.setOnLoadCallback(anoikis.drawChart)
-
-  locations = $.ajax
-    url: "/pilot_locations.json"
-    method: "get"
-    contentType: "application/json"
-  locations.done (data) ->
-    divs = []
-    $.each data, (location, pilots) ->
-      div = $("<div />")
-      list = $("<ul></ul>")
-      $.each pilots, (_, pilot) ->
-        list.append("<li>#{pilot}</li>")
-      div.append("<h2>#{location}</h2>", list)
-      divs.push(div)
-    $(".pilot_locations--list").empty().append(divs)
-    $(".pilot_locations").show()
 
   $(".edit_signature").on "ajax:success", (e, data) ->
     anoikis.process_signature_json(data)
