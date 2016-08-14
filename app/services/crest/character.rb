@@ -10,8 +10,10 @@ module Crest
     end
 
     def location
+      invalid = OpenStruct.new(id: nil, name: "<not online>")
+      return invalid if @pilot.refresh_token.nil?
       data = request("/#{@pilot.character_id}/location/")
-      return OpenStruct.new(id: nil, name: "<not online>") if data.empty?
+      return invalid if data.empty?
       OpenStruct.new(system_id: data["solarSystem"]["id"],
                           name: data["solarSystem"]["name"])
     end
@@ -40,7 +42,6 @@ module Crest
       @pilot.update(token: token)
       @options[:headers][:Authorization] = "Bearer #{token}"
       retry if (tries -= 1) > 0
-      @pilot.update(token: nil, refresh_token: nil)
       []
     end
   end
