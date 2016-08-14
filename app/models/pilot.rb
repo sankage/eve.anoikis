@@ -22,7 +22,7 @@ class Pilot < ApplicationRecord
     saved_name = read_attribute(:name)
     if saved_name.nil?
       crest_name = crest_character.name
-      write_attribute(:name, crest_name)
+      update(name: crest_name)
       saved_name = crest_name
     end
     saved_name
