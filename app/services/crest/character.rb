@@ -39,8 +39,8 @@ module Crest
     rescue StandardError, '401'
       @logger.debug response
       token = Crest::RefreshToken.new(@pilot.refresh_token).process
-      @pilot.update(token: token)
-      @options[:headers][:Authorization] = "Bearer #{token}"
+      @pilot.update(token: token["access_token"], refresh_token: token["refresh_token"])
+      @options = { headers: { Authorization: "Bearer #{token["access_token"]}" } }
       retry if (tries -= 1) > 0
       []
     end
@@ -60,7 +60,7 @@ module Crest
       response = self.class.post("/oauth/token", headers: headers,
                                  body: { grant_type: 'refresh_token',
                                          refresh_token: @refresh_token })
-      JSON.parse(response.body)["access_token"]
+      JSON.parse(response.body)
     end
   end
 end
