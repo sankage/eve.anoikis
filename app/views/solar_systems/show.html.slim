@@ -83,7 +83,7 @@ div.signatures
       = render partial: "signatures/table_rows", locals: { system: @system }
     tfoot
       tr.signatures--new
-        td colspan="7"
+        td colspan="8"
           = link_to "Add New Sig", "", data: { trigger: "new_sig" }
           = form_for [@system.system, @system.new_sig], remote: true do |form|
             dl
