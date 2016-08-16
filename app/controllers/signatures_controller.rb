@@ -104,7 +104,9 @@ class SignaturesController < ApplicationController
 
   def sig_params
     sig_stuff = params.require(:signature).permit(:sig_id, :type, :group, :name)
-    sig_stuff[:sig_id] = sig_stuff[:sig_id]&.upcase
+    unless sig_stuff[:sig_id].nil?
+      sig_stuff[:sig_id] = sig_stuff[:sig_id].upcase
+    end
     sig_stuff
   end
 
