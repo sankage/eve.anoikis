@@ -1,4 +1,5 @@
 - provide :title, @system.name
+- provide :current_system_id, @system.system_id.to_s
 div.tabs
   ul
     - current_user.tabs.each do |tab|

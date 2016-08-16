@@ -23,23 +23,24 @@ anoikis.drawChart = ->
   anoikis.chart.setSelection([{ row: selected_row }])
 
 anoikis.process_signature_json = (data) ->
-  if data.type is "signatures"
-    $(".signatures tbody").empty().append(data.signatures)
-  if data.signature_id
-    selector = $(".signatures [data-signature-id=\"#{data.signature_id}\"]")
-    index = selector.index()
-    selector.remove()
-    if $(".signatures tbody tr").length
-      new_current_row = $(".signatures tbody tr:eq(#{index})")
-      if new_current_row.length
-        new_current_row.before(data.signature)
+  if data.solar_system_id is anoikis.current_system_id
+    if data.type is "signatures"
+      $(".signatures tbody").empty().append(data.signatures)
+    if data.signature_id
+      selector = $(".signatures [data-signature-id=\"#{data.signature_id}\"]")
+      index = selector.index()
+      selector.remove()
+      if $(".signatures tbody tr").length
+        new_current_row = $(".signatures tbody tr:eq(#{index})")
+        if new_current_row.length
+          new_current_row.before(data.signature)
+        else
+          $(".signatures tbody tr:eq(#{index-1})").after(data.signature)
       else
-        $(".signatures tbody tr:eq(#{index-1})").after(data.signature)
-    else
-      $(".signatures tbody").append(data.signature)
-  if data.system_map
-    $("#mapper").empty().append(data.system_map)
-    anoikis.drawChart()
+        $(".signatures tbody").append(data.signature)
+    if data.system_map
+      $("#mapper").empty().append(data.system_map)
+      anoikis.drawChart()
   if data.type is "locations"
     divs = []
     $.each data.locations, (location, pilots) ->
@@ -54,6 +55,7 @@ anoikis.process_signature_json = (data) ->
 
 
 $(document).on "turbolinks:load", ->
+  anoikis.current_system_id = $("body").data("current-system-id")
   systems = $.ajax
     url: "/static.json"
     method: "get"
@@ -78,7 +80,7 @@ $(document).on "turbolinks:load", ->
 
   $(".edit_signature").on "ajax:success", (e, data) ->
     anoikis.process_signature_json(data)
-  $(".new_signature").on "ajax:success", -> $(".signatures--new form").reset()
+  $(".new_signature").on "ajax:success", -> $(".new_signature")[0].reset()
   $("[name='signature[group]']").on "change", ->
     type = "list--" + $(this).val() + "s"
     form = $(this).closest("form")
