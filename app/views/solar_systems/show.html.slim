@@ -38,7 +38,7 @@ div.solar_system__details
     - unless @system.statics.empty?
       dt Statics
       - @system.statics.each do |static|
-        dd = static.name
+        dd = "#{static.name} - #{static.leads_to}"
     - if @system.distances
       dt Trade Hubs
       dd
