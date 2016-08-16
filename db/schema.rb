@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160814011534) do
+ActiveRecord::Schema.define(version: 20160816005422) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,7 +67,6 @@ ActiveRecord::Schema.define(version: 20160814011534) do
   end
 
   create_table "solar_systems", force: :cascade do |t|
-    t.integer  "system_id"
     t.string   "name"
     t.datetime "created_at",                                  null: false
     t.datetime "updated_at",                                  null: false
@@ -75,7 +74,7 @@ ActiveRecord::Schema.define(version: 20160814011534) do
     t.string   "region"
     t.string   "constellation"
     t.string   "effect"
-    t.decimal  "security",            precision: 3, scale: 2
+    t.decimal  "security",            precision: 2, scale: 1
     t.integer  "distance_to_jita"
     t.integer  "distance_to_amarr"
     t.integer  "distance_to_dodixie"
