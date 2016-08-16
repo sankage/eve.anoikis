@@ -34,3 +34,5 @@ $(document).on "click", "[data-trigger]", (event) ->
   sig_id = $(this).data('trigger')
   $(".signatures--edit[data-signature-id=\"#{sig_id}\"]").toggle()
   $(".signatures--show[data-signature-id=\"#{sig_id}\"]").toggle()
+  if sig_id is "new_sig"
+    $(".signatures--new form").toggle()

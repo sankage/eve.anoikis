@@ -29,9 +29,9 @@ tr.signatures--edit data-signature-id=sig.id
         dd = form.select :group, Signature.groups.keys
         - if sig.connection
           dt Wormhole Type
-          dd = text_field_tag "connection[wh_type]", sig.connection.wh_type, list: "wormhole_types"
+          dd = text_field_tag "connection[wh_type]", sig.connection.wh_type, list: "list--wormhole_types"
         dt Name
-        dd = form.text_field :name, list: "systems"
+        dd = form.text_field :name
         - if sig.connection_status
           dt Life
           dd = select_tag "connection_status[life]", options_for_select(ConnectionStatus.human_life, sig.connection_status.life)

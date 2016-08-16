@@ -81,16 +81,21 @@ div.signatures
     tbody
       = render partial: "signatures/table_rows", locals: { system: @system }
     tfoot
-      tr
-        = form_for [@system.system, @system.new_sig] do |form|
-          td = form.text_field :sig_id
-          td = form.select :type, Signature.types.keys
-          td = form.select :group, Signature.groups.keys
-          td
-          td = form.text_field :name, list: "systems"
-          td
-          td
-          td = form.submit "Create Sig"
+      tr.signatures--new
+        td colspan="7"
+          = link_to "Add New Sig", "", data: { trigger: "new_sig" }
+          = form_for [@system.system, @system.new_sig], remote: true do |form|
+            dl
+              dt Sig ID
+              dd = form.text_field :sig_id
+              dt Type
+              dd = form.select :type, Signature.types.keys
+              dt Group
+              dd = form.select :group, Signature.groups.keys
+              dt Name
+              dd = form.text_field :name
+            div.options
+              => form.submit "Create Sig"
 
 div.pilot_locations
   button.sliding-panel-button type="button" Click for pilot locations

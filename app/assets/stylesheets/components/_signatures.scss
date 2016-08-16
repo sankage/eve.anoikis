@@ -19,8 +19,8 @@
   }
 }
 
-.signatures--edit {
-  display: none;
+.signatures--edit,
+.signatures--new {
   dl {
     dt {
       @include span-columns(2);
@@ -34,4 +34,9 @@
   .options {
     @include shift(2);
   }
+}
+
+.signatures--edit,
+.signatures--new form {
+  display: none;
 }

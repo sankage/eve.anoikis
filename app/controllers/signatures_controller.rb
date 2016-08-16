@@ -18,7 +18,18 @@ class SignaturesController < ApplicationController
     else
       flash[:error] = "Signature not added."
     end
-    redirect_to solar_system
+
+    respond_to do |format|
+      format.json { render json: {
+          signature_id: signature.id,
+          signature: SignaturesController.render(partial: 'signatures/table_row',
+                                                  locals: { sig: signature }),
+          system_map: SignaturesController.render(partial: 'solar_systems/connection_map',
+                                                   locals: { solar_system: system_object })
+        }
+      }
+      format.html { redirect_to solar_system }
+    end
   end
 
   def batch_create
@@ -40,8 +51,9 @@ class SignaturesController < ApplicationController
 
   def update
     solar_system = SolarSystem.find_by(id: params[:solar_system_id])
-    signature = Signature.find_by(id: params[:id])
     system_object = SystemObject.new(params[:solar_system_id], current_user)
+    signature = Signature.find_by(id: params[:id])
+    # TODO: add ability to overwrite a sig based on sig_id
     if signature.update(sig_params)
       signature.create_connections(solar_system, connection_params)
       signature.update_connection_status(connection_status_params)
@@ -85,7 +97,9 @@ class SignaturesController < ApplicationController
   private
 
   def sig_params
-    params.require(:signature).permit(:sig_id, :type, :group, :name)
+    sig_stuff = params.require(:signature).permit(:sig_id, :type, :group, :name)
+    sig_stuff[:sig_id] = sig_stuff[:sig_id]&.upcase
+    sig_stuff
   end
 
   def connection_params

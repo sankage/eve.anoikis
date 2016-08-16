@@ -55,16 +55,32 @@ anoikis.process_signature_json = (data) ->
 
 $(document).on "turbolinks:load", ->
   systems = $.ajax
-    url: "/systems/system_names.json"
+    url: "/static.json"
     method: "get"
     contentType: "application/json"
   systems.done (data) ->
+    lists = []
     options = data.systems.map (name) -> "<option value='#{name}'>"
-    $("<datalist id='systems'></datalist>").append(options).appendTo("body")
+    lists.push $("<datalist id='list--wormholes'></datalist>").append(options)
     options = data.wormhole_types.map (name) -> "<option value='#{name}'>"
-    $("<datalist id='wormhole_types'></datalist>").append(options).appendTo("body")
+    lists.push $("<datalist id='list--wormhole_types'></datalist>").append(options)
+    options = data.combat_sites.map (name) -> "<option value='#{name}'>"
+    lists.push $("<datalist id='list--combat_sites'></datalist>").append(options)
+    options = data.data_sites.map (name) -> "<option value='#{name}'>"
+    lists.push $("<datalist id='list--data_sites'></datalist>").append(options)
+    options = data.relic_sites.map (name) -> "<option value='#{name}'>"
+    lists.push $("<datalist id='list--relic_sites'></datalist>").append(options)
+    options = data.gas_sites.map (name) -> "<option value='#{name}'>"
+    lists.push $("<datalist id='list--gas_sites'></datalist>").append(options)
+    $("body").append(lists)
 
   google.charts.setOnLoadCallback(anoikis.drawChart)
 
   $(".edit_signature").on "ajax:success", (e, data) ->
     anoikis.process_signature_json(data)
+  $(".new_signature").on "ajax:success", -> $(".signatures--new form").reset()
+  $("[name='signature[group]']").on "change", ->
+    type = "list--" + $(this).val() + "s"
+    form = $(this).closest("form")
+    $("[name='signature[name]']", form).attr("list", type)
+  $("[name='signature[group]']").trigger("change")
