@@ -39,7 +39,7 @@ class SignaturesController < ApplicationController
                                      params[:signatures])
     solar_system = SystemObject.new(params[:solar_system_id], current_user)
     ActionCable.server.broadcast 'signatures',
-      solar_system_id: system_object.system_id,
+      solar_system_id: solar_system.system_id,
       type: :signatures,
       signatures: SignaturesController.render(partial: 'signatures/table_rows',
                                                locals: { system: solar_system }),

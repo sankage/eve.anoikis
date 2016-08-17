@@ -60,7 +60,7 @@ class Connection < ApplicationRecord
   end
 
   def update_connection(name)
-    return if name.empty? || matched_signature.nil?
+    return if name&.empty? || matched_signature.nil?
     desto_system = SolarSystem.find_by(name: name)
     Signature.find_by(id: matched_signature.id).update(solar_system_id: desto_system.id)
   end
