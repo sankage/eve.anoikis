@@ -6,8 +6,9 @@ class PilotLocation
   def groups
     @pilots.each_with_object({}) do |pilot, accum|
       unless pilot.location.system_id.nil?
-        accum[pilot.location.name] = [] if accum[pilot.location.name].nil?
-        accum[pilot.location.name] << pilot.name
+        key = "#{pilot.location.system_id}|#{pilot.location.name}"
+        accum[key] = [] if accum[key].nil?
+        accum[key] << pilot.name
       end
     end
   end

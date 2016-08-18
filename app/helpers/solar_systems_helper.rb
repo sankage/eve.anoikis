@@ -17,6 +17,7 @@ module SolarSystemsHelper
                  </a>
                </h2>
                <div class="effect">#{ss["effect"]}</div>
+               <div class="pilots">#{image_tag("contacts.png")}</div>
              </div>
              NODE
         },

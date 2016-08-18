@@ -42,14 +42,17 @@ anoikis.process_signature_json = (data) ->
       $("#mapper").empty().append(data.system_map)
       anoikis.drawChart()
   if data.type is "locations"
+    $("[data-node] .pilots").removeClass("active")
     divs = []
     $.each data.locations, (location, pilots) ->
+      [system_id, system_name] = location.split("|")
       div = $("<div />")
       list = $("<ul></ul>")
       $.each pilots, (_, pilot) ->
         list.append("<li>#{pilot}</li>")
-      div.append("<h2>#{location}</h2>", list)
+      div.append("<h2>#{system_name}</h2>", list)
       divs.push(div)
+      $("[data-node='#{system_id}'] .pilots").addClass("active")
     $(".pilot_locations--list").empty().append(divs)
     $(".pilot_locations").show()
 

@@ -19,6 +19,23 @@
   }
   .node__information {
     background-color: $color-nodes;
+    position: relative;
+    .pilots {
+      display: none;
+      &.active {
+        display: block;
+      }
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 20px;
+      height: 20px;
+      padding: 0;
+      img {
+        display: block;
+        padding: 0;
+      }
+    }
   }
   .node__information--hs {}
   .node__information--ls {}
@@ -26,5 +43,10 @@
 
   .node--selected .node__information {
     background-color: $color-node-selected;
+  }
+  .google-visualization-orgchart-linebottom,
+  .google-visualization-orgchart-lineleft,
+  .google-visualization-orgchart-lineright {
+    border-width: 2px;
   }
 }
