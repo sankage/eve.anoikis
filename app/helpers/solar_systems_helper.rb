@@ -6,7 +6,8 @@ module SolarSystemsHelper
           v: "#{ss["id"]}",
           f: <<~NODE
              <div class="node__information node__information--#{system_class(wh_class: ss["wormhole_class"], security: ss["security"]).downcase}"
-                  data-node="#{ss["id"]}">
+                  data-node="#{ss["id"]}"
+                  data-status="#{status(ss["life"], ss["mass"])}">
                <h3 class="wh_class">
                  #{system_class(wh_class: ss["wormhole_class"], security: ss["security"])}
                  <span class="sig_id">[#{(ss["sig_id"] || "???").first(3)}]</span>
@@ -40,5 +41,19 @@ module SolarSystemsHelper
     else
       "C#{wh_class}"
     end
+  end
+
+  def status(life, mass)
+    statuses = []
+    if life == 1
+      statuses << "eol"
+    end
+    if mass == 1
+      statuses << "destab"
+    end
+    if mass == 2
+      statuses << "critical"
+    end
+    statuses.join(" ")
   end
 end

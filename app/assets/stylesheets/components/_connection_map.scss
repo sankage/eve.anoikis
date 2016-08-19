@@ -8,6 +8,9 @@
     font-size: 0.9em;
     font-weight: normal;
   }
+  table {
+    border-collapse: separate;
+  }
   .effect {
     font-size: 0.9em;
   }
@@ -44,9 +47,29 @@
   .node--selected .node__information {
     background-color: $color-node-selected;
   }
-  .google-visualization-orgchart-linebottom,
-  .google-visualization-orgchart-lineleft,
+  .google-visualization-orgchart-linebottom {
+    border-bottom-width: 2px;
+  }
+  .google-visualization-orgchart-lineleft {
+    border-left-width: 2px;
+  }
   .google-visualization-orgchart-lineright {
-    border-width: 2px;
+    border-right-width: 2px;
+  }
+
+  .critical { border-color: #ff4747; }
+  .critical-vertical {
+    border-left-color: #ff4747;
+    border-right-color: #ff4747;
+  }
+  .destab { border-color: #f5b544; }
+  .destab-vertical {
+    border-left-color: #f5b544;
+    border-right-color: #f5b544;
+  }
+  .eol { border-style: dashed; }
+  .eol-vertical {
+    border-left-style: dashed;
+    border-right-style: dashed;
   }
 }
