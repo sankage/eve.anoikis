@@ -15,12 +15,16 @@ anoikis.drawChart = ->
     selected_row = row_index if row[0]["v"] is selected
 
   anoikis.chart = new google.visualization.OrgChart(connection_map[0])
+  set_selection_override = -> anoikis.chart.setSelection([{ row: selected_row }])
+  google.visualization.events.addListener anoikis.chart, 'ready', set_selection_override
+  google.visualization.events.addListener anoikis.chart, 'select', set_selection_override
+
   anoikis.chart.draw(data, {
     allowHtml: true,
     allowCollapse: true,
     nodeClass: "node",
     selectedNodeClass: "node--selected" })
-  anoikis.chart.setSelection([{ row: selected_row }])
+
   $(".node__information").each ->
     node = $(this)
     status = node.data("status")
@@ -49,17 +53,36 @@ anoikis.process_signature_json = (data) ->
   if data.type is "locations"
     $("[data-node] .pilots").removeClass("active")
     divs = []
+    opens = new Set($(".pilot_locations--list").data('open'))
     $.each data.locations, (location, pilots) ->
       [system_id, system_name] = location.split("|")
-      div = $("<div />")
-      list = $("<ul></ul>")
+      system_id = parseInt(system_id, 10)
+      div = $("<div class='expander' />")
+      list = $("<ul class='expander-content'></ul>")
       $.each pilots, (_, pilot) ->
         list.append("<li>#{pilot}</li>")
-      div.append("<h2>#{system_name}</h2>", list)
+      classes = ["expander-trigger", "expander-hidden"]
+      classes.pop() if opens.has(system_id)
+      h2 = "<h2 class='#{classes.join(' ')}' data-system-id='#{system_id}'>#{system_name}</h2>"
+      div.append(h2, list)
       divs.push(div)
       $("[data-node='#{system_id}'] .pilots").addClass("active")
     $(".pilot_locations--list").empty().append(divs)
     $(".pilot_locations").show()
+$(document).on "click", ".pilot_locations--list .expander-trigger", ->
+  system_id = $(this).data("system-id")
+  opens = new Set($(".pilot_locations--list").data('open'))
+  if $(this).hasClass "expander-hidden"
+    opens.add(system_id)
+  else
+    opens.delete(system_id)
+  $(".pilot_locations--list").data('open', Array.from(opens))
+  return
+$(document).on "click", ".connection_map [data-node] .pilots", ->
+  system_id = $(this).closest(".node__information").data("node")
+  $(".sliding-panel-button").trigger("click")
+  $(".expander-trigger[data-system-id='#{system_id}']").trigger("click")
+  return
 
 anoikis.mark_line = (node, parent, status) ->
   status_vertical = status.split(" ").map( (i) -> return i + "-vertical" ).join(" ")

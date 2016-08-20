@@ -7,7 +7,10 @@
     border-bottom: 1px solid #fdfdfd;
     text-align: right;
     padding: 0.5em;
-    margin-bottom: 0.5em
+    margin-bottom: 0.5em;
+    &.expander-trigger {
+      color: #fdfdfd;
+    }
   }
   li {
     padding: 0 0.5em;
