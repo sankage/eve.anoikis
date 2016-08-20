@@ -35,8 +35,6 @@ class Connection < ApplicationRecord
     if inverse
       if !connection_params[:wh_type].empty? && connection_params[:wh_type] != "K162"
         inverse.update(wh_type: "K162")
-      else
-        inverse.update(wh_type: nil)
       end
     end
   end
