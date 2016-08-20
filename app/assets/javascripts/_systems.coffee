@@ -33,42 +33,49 @@ anoikis.drawChart = ->
 
 anoikis.process_signature_json = (data) ->
   if data.solar_system_id is anoikis.current_system_id
-    if data.type is "signatures"
-      $(".signatures tbody").empty().append(data.signatures)
-    if data.signature_id
-      selector = $(".signatures [data-signature-id=\"#{data.signature_id}\"]")
-      index = selector.index()
-      selector.remove()
-      if $(".signatures tbody tr").length
-        new_current_row = $(".signatures tbody tr:eq(#{index})")
-        if new_current_row.length
-          new_current_row.before(data.signature)
-        else
-          $(".signatures tbody tr:eq(#{index-1})").after(data.signature)
-      else
-        $(".signatures tbody").append(data.signature)
     if data.system_map
       $("#mapper").empty().append(data.system_map)
       anoikis.drawChart()
-  if data.type is "locations"
-    $("[data-node] .pilots").removeClass("active")
-    divs = []
-    opens = new Set($(".pilot_locations--list").data('open'))
-    $.each data.locations, (location, pilots) ->
-      [system_id, system_name] = location.split("|")
-      system_id = parseInt(system_id, 10)
-      div = $("<div class='expander' />")
-      list = $("<ul class='expander-content'></ul>")
-      $.each pilots, (_, pilot) ->
-        list.append("<li>#{pilot}</li>")
-      classes = ["expander-trigger", "expander-hidden"]
-      classes.pop() if opens.has(system_id)
-      h2 = "<h2 class='#{classes.join(' ')}' data-system-id='#{system_id}'>#{system_name}</h2>"
-      div.append(h2, list)
-      divs.push(div)
-      $("[data-node='#{system_id}'] .pilots").addClass("active")
-    $(".pilot_locations--list").empty().append(divs)
-    $(".pilot_locations").show()
+  switch data.type
+    when "signatures"
+      if data.solar_system_id is anoikis.current_system_id
+        $(".signatures tbody").empty().append(data.signatures)
+    when "single_signature"
+      if data.solar_system_id is anoikis.current_system_id
+        selector = $(".signatures [data-signature-id=\"#{data.signature_id}\"]")
+        index = selector.index()
+        selector.remove()
+        if $(".signatures tbody tr").length
+          new_current_row = $(".signatures tbody tr:eq(#{index})")
+          if new_current_row.length
+            new_current_row.before(data.signature)
+          else
+            $(".signatures tbody tr:eq(#{index-1})").after(data.signature)
+        else
+          $(".signatures tbody").append(data.signature)
+    when "locations"
+      $("[data-node] .pilots").removeClass("active")
+      divs = []
+      opens = new Set($(".pilot_locations--list").data('open'))
+      $.each data.locations, (location, pilots) ->
+        [system_id, system_name] = location.split("|")
+        system_id = parseInt(system_id, 10)
+        div = $("<div class='expander' />")
+        list = $("<ul class='expander-content'></ul>")
+        $.each pilots, (_, pilot) ->
+          list.append("<li>#{pilot}</li>")
+        classes = ["expander-trigger", "expander-hidden"]
+        classes.pop() if opens.has(system_id)
+        h2 = "<h2 class='#{classes.join(' ')}' data-system-id='#{system_id}'>#{system_name}</h2>"
+        div.append(h2, list)
+        divs.push(div)
+        $("[data-node='#{system_id}'] .pilots").addClass("active")
+      $(".pilot_locations--list").empty().append(divs)
+      $(".pilot_locations").show()
+    when "signature_removal"
+      if data.solar_system_id is anoikis.current_system_id
+        $(".signatures [data-signature-id=\"#{data.signature_id}\"]").remove()
+
 $(document).on "click", ".pilot_locations--list .expander-trigger", ->
   system_id = $(this).data("system-id")
   opens = new Set($(".pilot_locations--list").data('open'))

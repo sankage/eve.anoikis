@@ -7,14 +7,7 @@ class SignaturesController < ApplicationController
     system_object = SystemObject.new(params[:solar_system_id], current_user)
     if signature.save
       signature.create_connections(solar_system)
-      ActionCable.server.broadcast 'signatures',
-        solar_system_id: system_object.system_id,
-        type: :signatures,
-        signatures: SignaturesController.render(partial: 'signatures/table_rows',
-                                                 locals: { system: system_object }),
-        system_map: SignaturesController.render(partial: 'solar_systems/connection_map',
-                                                 locals: { solar_system: system_object })
-
+      broadcast_signatures(system_object)
       flash[:success] = "Signature added."
     else
       flash[:error] = "Signature not added."
@@ -23,6 +16,7 @@ class SignaturesController < ApplicationController
     respond_to do |format|
       format.json { render json: {
           solar_system_id: system_object.system_id,
+          type: :single_signature,
           signature_id: signature.id,
           signature: SignaturesController.render(partial: 'signatures/table_row',
                                                   locals: { sig: signature }),
@@ -37,14 +31,8 @@ class SignaturesController < ApplicationController
   def batch_create
     Signature.create_from_collection(params[:solar_system_id],
                                      params[:signatures])
-    solar_system = SystemObject.new(params[:solar_system_id], current_user)
-    ActionCable.server.broadcast 'signatures',
-      solar_system_id: solar_system.system_id,
-      type: :signatures,
-      signatures: SignaturesController.render(partial: 'signatures/table_rows',
-                                               locals: { system: solar_system }),
-      system_map: SignaturesController.render(partial: 'solar_systems/connection_map',
-                                               locals: { solar_system: solar_system })
+    system_object = SystemObject.new(params[:solar_system_id], current_user)
+    broadcast_signatures(system_object)
     render json: { success: true }
   end
 
@@ -60,18 +48,12 @@ class SignaturesController < ApplicationController
     if signature.update(sig_params)
       signature.create_connections(solar_system, connection_params)
       signature.update_connection_status(connection_status_params)
-
-      ActionCable.server.broadcast 'signatures',
-        solar_system_id: system_object.system_id,
-        signature_id: signature.id,
-        signature: SignaturesController.render(partial: 'signatures/table_row',
-                                                locals: { sig: signature }),
-        system_map: SignaturesController.render(partial: 'solar_systems/connection_map',
-                                                 locals: { solar_system: system_object })
+      broadcast_signatures(system_object)
     end
     respond_to do |format|
       format.json { render json: {
           solar_system_id: system_object.system_id,
+          type: :single_signature,
           signature_id: signature.id,
           signature: SignaturesController.render(partial: 'signatures/table_row',
                                                   locals: { sig: signature }),
@@ -90,14 +72,18 @@ class SignaturesController < ApplicationController
     flash[:error] = "Signature deleted."
 
     system_object = SystemObject.new(sig.solar_system.id, current_user)
-    ActionCable.server.broadcast 'signatures',
-      solar_system_id: system_object.system_id,
-      type: :signatures,
-      signatures: SignaturesController.render(partial: 'signatures/table_rows',
-                                               locals: { system: system_object }),
-      system_map: SignaturesController.render(partial: 'solar_systems/connection_map',
-                                               locals: { solar_system: system_object })
-    redirect_to sig.solar_system
+    broadcast_signatures(system_object)
+    respond_to do |format|
+      format.json { render json: {
+          solar_system_id: system_object.system_id,
+          type: :signature_removal,
+          signature_id: signature.id,
+          system_map: SignaturesController.render(partial: 'solar_systems/connection_map',
+                                                   locals: { solar_system: system_object })
+        }
+      }
+      format.html { redirect_to solar_system }
+    end
   end
 
   private
@@ -119,5 +105,15 @@ class SignaturesController < ApplicationController
   def connection_status_params
     return unless params[:connection_status]
     params.require(:connection_status).permit(:life, :mass)
+  end
+
+  def broadcast_signatures(system_object)
+    ActionCable.server.broadcast 'signatures',
+      solar_system_id: system_object.system_id,
+      type: :signatures,
+      signatures: SignaturesController.render(partial: 'signatures/table_rows',
+                                               locals: { system: system_object }),
+      system_map: SignaturesController.render(partial: 'solar_systems/connection_map',
+                                               locals: { solar_system: system_object })
   end
 end

@@ -16,6 +16,7 @@ tr.signatures--show data-signature-id=sig.id
   td
     = link_to "✖", solar_system_signature_path(sig.solar_system, sig.id),
       method: :delete,
+      remote: true,
       data: { confirm: "Are you sure you want to delete this sig?" }
     =< link_to "edit", '', data: { trigger: sig.id }
 tr.signatures--edit data-signature-id=sig.id
