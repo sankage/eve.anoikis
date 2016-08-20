@@ -3,15 +3,16 @@ tr.signatures--show data-signature-id=sig.id
   td = sig.type&.titleize
   td = sig.group&.titleize
   td.active_time = time_diff(Time.now, sig.created_at)
-  td
+  td *(!sig.wormhole? ? {colspan: 3 } : {})
     - if sig.connection
       => sig.connection.wh_type
     - if sig.matched_signature
       = link_to sig.name, solar_system_path(sig.matched_signature.solar_system)
     - else
       = sig.name
-  td = sig.connection_status&.life&.humanize
-  td = sig.connection_status&.mass&.humanize
+  - if sig.wormhole?
+    td = sig.connection_status&.life&.humanize
+    td = sig.connection_status&.mass&.humanize
   td
     = link_to "✖", solar_system_signature_path(sig.solar_system, sig.id),
       method: :delete,
