@@ -1,7 +1,8 @@
-$color-background: #fff;
+$color-background: #2c2626;
 $color-gray: #999;
+$color-body-copy: #fff;
 
-$color-nodes: #efefef;
-$color-node-selected: #8dc6e7;
+$color-nodes: #333;
+$color-node-selected: lighten($color-nodes, 10%);
 $color-note-border: #eee;
 $color-note-author: $color-gray;

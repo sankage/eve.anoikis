@@ -11,6 +11,8 @@ $max-width: 960px;
 body {
   margin: 0;
   padding: 0;
+  color: $color-body-copy;
+  background-color: $color-background;
 }
 
 .container {
