@@ -42,4 +42,8 @@
     bottom: 0;
     font-size: 0.8em;
   }
+  textarea {
+    color: $color-body-copy;
+    background-color: tint($color-background, 10%);
+  }
 }
