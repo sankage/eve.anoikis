@@ -24,6 +24,10 @@ class Signature < ApplicationRecord
     end
   end
 
+  def self.cleanup
+    where("created_at < ?", 2.days.ago).destroy_all
+  end
+
   belongs_to :solar_system
   has_one :connection
   has_one :matched_signature, through: :connection
