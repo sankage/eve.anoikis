@@ -57,3 +57,4 @@ server '192.241.148.125', user: 'deploy', roles: %w{app web}
 #     auth_methods: %w(publickey password)
 #     # password: 'please use keys'
 #   }
+set :sidekiq_queue, ["default,5", "low_priority,3"]
