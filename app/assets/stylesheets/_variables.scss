@@ -6,3 +6,8 @@ $color-nodes: #333;
 $color-node-selected: lighten($color-nodes, 10%);
 $color-note-border: #eee;
 $color-note-author: $color-gray;
+
+$color-node-hs: shade(green, 30%);
+$color-node-ls: shade(yellow, 60%);
+$color-node-ns: shade(red, 50%);
+$color-node-wh: #2060a0;

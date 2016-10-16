@@ -41,9 +41,15 @@
       }
     }
   }
-  .node__information--hs {}
-  .node__information--ls {}
-  .node__information--ns {}
+  .node__information--hs { border: 1px solid $color-node-hs; }
+  .node__information--ls { border: 1px solid $color-node-ls; }
+  .node__information--ns { border: 1px solid $color-node-ns; }
+  .node__information--c1,
+  .node__information--c2,
+  .node__information--c3,
+  .node__information--c4,
+  .node__information--c5,
+  .node__information--c6 { border: 1px solid $color-node-wh; }
 
   .node--selected .node__information {
     background-color: $color-node-selected;
