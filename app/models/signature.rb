@@ -29,7 +29,7 @@ class Signature < ApplicationRecord
   end
 
   belongs_to :solar_system
-  has_one :connection
+  has_one :connection, dependent: :destroy
   has_one :matched_signature, through: :connection
 
   enum type: [ :cosmic_signature, :cosmic_anomaly ]
