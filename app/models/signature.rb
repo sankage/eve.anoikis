@@ -9,12 +9,14 @@ class Signature < ApplicationRecord
         s.group = sig['group'].downcase.gsub(' ', '_').to_sym if sig['group']
       end
 
-      updatable_things = {
-        group: sig['group']&.downcase.gsub(' ', '_').to_sym
-      }
+      updatable_things = {}
+
+      unless sig["group"].empty?
+        updatable_things[:group] = sig["group"]&.downcase.gsub(' ', '_').to_sym
+      end
 
       unless updatable_things[:group] == :wormhole
-        updatable_things[:name] = sig["name"]
+        updatable_things[:name] = sig["name"] unless sig["name"].empty?
       end
 
       signature.update(updatable_things)
