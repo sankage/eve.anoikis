@@ -6,6 +6,6 @@ class PilotLocationsJob < ApplicationJob
     ActionCable.server.broadcast 'signatures',
       type: :locations,
       locations: pl.groups
-    self.class.set(wait: 15.seconds).perform_later
+    self.class.set(wait: 5.seconds).perform_later
   end
 end
