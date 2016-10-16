@@ -40,6 +40,9 @@ anoikis.process_signature_json = (data) ->
     when "signatures"
       if data.solar_system_id is anoikis.current_system_id
         $(".signatures tbody").empty().append(data.signatures)
+      # force the sigs to reapply the proper datalist
+      $("[name='signature[group]']").trigger("change")
+      return
     when "single_signature"
       if data.solar_system_id is anoikis.current_system_id
         selector = $(".signatures [data-signature-id=\"#{data.signature_id}\"]")
@@ -53,6 +56,9 @@ anoikis.process_signature_json = (data) ->
             $(".signatures tbody tr:eq(#{index-1})").after(data.signature)
         else
           $(".signatures tbody").append(data.signature)
+      # force the sigs to reapply the proper datalist
+      $("[name='signature[group]']").trigger("change")
+      return
     when "locations"
       $("[data-node] .pilots").removeClass("active")
       divs = []
@@ -75,6 +81,7 @@ anoikis.process_signature_json = (data) ->
     when "signature_removal"
       if data.solar_system_id is anoikis.current_system_id
         $(".signatures [data-signature-id=\"#{data.signature_id}\"]").remove()
+      return
 
 $(document).on "click", ".pilot_locations--list .expander-trigger", ->
   system_id = $(this).data("system-id")
@@ -190,7 +197,7 @@ $(document).on "turbolinks:load", ->
   $(".edit_signature").on "ajax:success", (e, data) ->
     anoikis.process_signature_json(data)
   $(".new_signature").on "ajax:success", -> $(".new_signature")[0].reset()
-  $("[name='signature[group]']").on "change", ->
+  $(".signatures").on "change", "[name='signature[group]']", ->
     type = "list--" + $(this).val() + "s"
     form = $(this).closest("form")
     $("[name='signature[name]']", form).attr("list", type)
