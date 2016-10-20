@@ -92,7 +92,9 @@ $(document).on "click", ".pilot_locations--list .expander-trigger", ->
     opens.delete(system_id)
   $(".pilot_locations--list").data('open', Array.from(opens))
   return
-$(document).on "click", ".connection_map [data-node] .pilots", ->
+$(document).on "click", ".connection_map [data-node] .pilots", (event) ->
+  event.preventDefault()
+  event.stopImmediatePropagation()
   system_id = $(this).closest(".node__information").data("node")
   $(".sliding-panel-button").trigger("click")
   $(".expander-trigger[data-system-id='#{system_id}']").trigger("click")
