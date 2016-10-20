@@ -23,6 +23,7 @@
   .node__information {
     background-color: $color-nodes;
     position: relative;
+    padding: 0;
     .pilots {
       display: none;
       &.active {
@@ -38,6 +39,21 @@
       img {
         display: block;
         padding: 0;
+      }
+    }
+    a {
+      display: block;
+      padding: 2px;
+      color: inherit;
+      h2 {
+        color: tint($action-color, 25%);
+      }
+      &:active,
+      &:focus,
+      &:hover {
+        h2 {
+          color: $action-color;
+        }
       }
     }
   }

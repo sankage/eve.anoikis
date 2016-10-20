@@ -8,17 +8,17 @@ module SolarSystemsHelper
              <div class="node__information node__information--#{system_class(wh_class: ss["wormhole_class"], security: ss["security"]).downcase}"
                   data-node="#{ss["id"]}"
                   data-status="#{status(ss["life"], ss["mass"])}">
-               <h3 class="wh_class">
-                 #{system_class(wh_class: ss["wormhole_class"], security: ss["security"])}
-                 <span class="sig_id">[#{(ss["sig_id"] || "???").first(3)}]</span>
-               </h3>
-               <h2>
-                 <a href="/systems/#{ss["id"]}">
+               <a href="/systems/#{ss["id"]}">
+                 <h3 class="wh_class">
+                   #{system_class(wh_class: ss["wormhole_class"], security: ss["security"])}
+                   <span class="sig_id">[#{(ss["sig_id"] || "???").first(3)}]</span>
+                 </h3>
+                 <h2>
                    #{ss["name"]}
-                 </a>
-               </h2>
-               <div class="effect">#{ss["effect"]}</div>
-               <div class="pilots">#{image_tag("contacts.png")}</div>
+                 </h2>
+                 <div class="effect">#{ss["effect"]}</div>
+                 <div class="pilots">#{image_tag("contacts.png")}</div>
+               </a>
              </div>
              NODE
         },
