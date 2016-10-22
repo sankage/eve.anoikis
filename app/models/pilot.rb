@@ -7,9 +7,10 @@ class Pilot < ApplicationRecord
   end
 
   has_many :tabs
+  belongs_to :solar_system
 
-  def location
-    crest_character.location
+  def get_location
+    update(solar_system_id: crest_character.location.system_id)
   end
 
   def is_member_of_alliance?

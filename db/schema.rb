@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160816005422) do
+ActiveRecord::Schema.define(version: 20161022040001) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,9 +50,11 @@ ActiveRecord::Schema.define(version: 20160816005422) do
     t.string   "name"
     t.string   "token"
     t.string   "refresh_token"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
-    t.boolean  "admin",         default: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.boolean  "admin",           default: false
+    t.integer  "solar_system_id"
+    t.index ["solar_system_id"], name: "index_pilots_on_solar_system_id", using: :btree
   end
 
   create_table "signatures", force: :cascade do |t|
@@ -118,6 +120,7 @@ ActiveRecord::Schema.define(version: 20160816005422) do
   add_foreign_key "connections", "signatures", column: "matched_signature_id"
   add_foreign_key "notes", "pilots"
   add_foreign_key "notes", "solar_systems"
+  add_foreign_key "pilots", "solar_systems"
   add_foreign_key "signatures", "solar_systems"
   add_foreign_key "statics", "solar_systems"
   add_foreign_key "statics", "wormhole_types"
