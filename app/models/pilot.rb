@@ -33,6 +33,10 @@ class Pilot < ApplicationRecord
     tabs.detect { |t| t.active? }&.solar_system
   end
 
+  def solar_system_name
+    solar_system.name
+  end
+
   private
 
   def crest_character
