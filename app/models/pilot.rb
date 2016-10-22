@@ -7,7 +7,7 @@ class Pilot < ApplicationRecord
   end
 
   has_many :tabs
-  belongs_to :solar_system
+  belongs_to :solar_system, optional: true
 
   def get_location
     update(solar_system_id: crest_character.location.system_id)
