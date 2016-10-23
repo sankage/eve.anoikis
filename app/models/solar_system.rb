@@ -56,22 +56,22 @@ class SolarSystem < ApplicationRecord
         SELECT
           0 AS "id",
           "signatures"."solar_system_id",
-          '' AS "name",
+          '…' AS "name",
           "wormhole_types"."wormhole_class" AS "wormhole_class",
-          null AS "security",
+          1.0 AS "security",
           null AS "effect",
           "signatures"."sig_id",
-          "connection_statuses"."mass" AS mass,
-          "connection_statuses"."life" AS life,
+          COALESCE("connection_statuses"."mass", 0) AS mass,
+          COALESCE("connection_statuses"."life", 0) AS life,
           "map"."path",
           false AS "cycle"
         FROM "signatures"
         INNER JOIN "map"
                 ON "signatures"."solar_system_id" = "map"."id"
                 AND "signatures"."sig_id" != "map"."sig_id"
-        INNER JOIN "connections"
+        LEFT JOIN "connections"
                 ON "connections"."signature_id" = "signatures"."id"
-        INNER JOIN "connection_statuses"
+        LEFT JOIN "connection_statuses"
                 ON "connection_statuses"."id" = "connections"."connection_status_id"
         LEFT JOIN "wormhole_types"
                ON "wormhole_types"."name" = "connections"."wh_type"

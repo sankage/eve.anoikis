@@ -4,9 +4,6 @@ module SolarSystemsHelper
       if ss["id"] == 0
         ss["id"] = "unmapped-#{i}"
       end
-      if ss["name"].empty?
-        ss["name"] = "…"
-      end
       [
         {
           v: "#{ss["id"]}",
@@ -38,6 +35,7 @@ module SolarSystemsHelper
   def system_class(wh_class:, security:)
     case wh_class
     when 9 then "NS"
+    when 8 then "LS"
     when 7
       if security.to_f >= 0.5
         "HS"
