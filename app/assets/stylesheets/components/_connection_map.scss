@@ -66,6 +66,7 @@
   .node__information--c4,
   .node__information--c5,
   .node__information--c6 { border: 1px solid $color-node-wh; }
+  .node__information---- { border: 1px solid $color-node-unknown; }
 
   .node--selected .node__information {
     background-color: $color-node-selected;

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161022040001) do
+ActiveRecord::Schema.define(version: 20161022235319) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -111,8 +111,9 @@ ActiveRecord::Schema.define(version: 20161022040001) do
     t.integer  "mass_jump"
     t.integer  "mass_regen"
     t.string   "leads_to"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.integer  "wormhole_class"
   end
 
   add_foreign_key "connections", "connection_statuses"
