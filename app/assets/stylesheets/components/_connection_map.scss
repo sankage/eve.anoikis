@@ -65,7 +65,9 @@
   .node__information--c3,
   .node__information--c4,
   .node__information--c5,
-  .node__information--c6 { border: 2px solid $color-node-wh; }
+  .node__information--c6,
+  .node__information--c12,
+  .node__information--c13 { border: 2px solid $color-node-wh; }
   .node__information---- { border: 2px solid $color-node-unknown; }
 
   .node--selected .node__information {

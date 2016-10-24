@@ -1,10 +1,8 @@
-@import 'bourbon';
-
-$max-width: 960px;
-@import 'neat';
-
-@import 'base/base';
 @import 'variables';
+
+@import 'bourbon';
+@import 'neat';
+@import 'base/base';
 
 @import 'components/*';
 
