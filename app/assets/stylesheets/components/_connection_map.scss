@@ -1,5 +1,6 @@
 .connection_map {
   @include fill-parent;
+  overflow-x: auto;
   h2 {
     font-size: 1em;
     font-weight: normal;

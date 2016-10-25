@@ -25,3 +25,7 @@ header {
     @include span-columns(9);
   }
 }
+
+.row {
+  @include row;
+}
