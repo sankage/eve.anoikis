@@ -6,14 +6,14 @@
     font-weight: normal;
   }
   h3 {
-    font-size: 0.9em;
+    font-size: 0.8em;
     font-weight: normal;
   }
   table {
     border-collapse: separate;
   }
   .effect {
-    font-size: 0.9em;
+    font-size: 0.8em;
   }
 
   .node {
@@ -25,6 +25,9 @@
     background-color: $color-nodes;
     position: relative;
     padding: 0;
+    display: inline-block;
+    height:100%;
+    width: 100%;
     .pilots {
       display: none;
       &.active {
