@@ -78,6 +78,16 @@
 
   .node--selected .node__information {
     background-color: $color-node-selected;
+    a {
+      h3 {
+        font-weight: bold;
+        color: $color-background;
+      }
+      h2 {
+        font-weight: bold;
+        color: $color-background;
+      }
+    }
   }
   .google-visualization-orgchart-linebottom {
     border-bottom-width: 2px;
@@ -89,15 +99,15 @@
     border-right-width: 2px;
   }
 
-  .critical { border-color: #ff4747; }
+  .critical { border-color: $color-line-critial; }
   .critical-vertical {
-    border-left-color: #ff4747;
-    border-right-color: #ff4747;
+    border-left-color: $color-line-critial;
+    border-right-color: $color-line-critial;
   }
-  .destab { border-color: #f5b544; }
+  .destab { border-color: $color-line-destab; }
   .destab-vertical {
-    border-left-color: #f5b544;
-    border-right-color: #f5b544;
+    border-left-color: $color-line-destab;
+    border-right-color: $color-line-destab;
   }
   .eol { border-style: dashed; }
   .eol-vertical {
