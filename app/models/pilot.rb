@@ -37,6 +37,10 @@ class Pilot < ApplicationRecord
     solar_system.name
   end
 
+  def set_destination(solar_system_id)
+    crest_character.set_destination(solar_system_id)
+  end
+
   private
 
   def crest_character

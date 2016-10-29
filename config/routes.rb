@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       post "batch_create", on: :collection
     end
     resources :notes, only: [:create, :destroy]
+    get "set_destination", on: :member
   end
 
   resources :tabs, only: [:create, :destroy] do

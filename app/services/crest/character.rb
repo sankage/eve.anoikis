@@ -30,6 +30,18 @@ module Crest
       data["name"]
     end
 
+    def set_destination(solar_system_id)
+      @options[:body] = {
+        clearOtherWaypoints: false,
+        first: false,
+        solarSystem: {
+          href: "https://crest-tq.eveonline.com/solarsystems/#{solar_system_id}/",
+          id: solar_system_id
+        }
+      }
+      send("/#{@pilot.character_id}/ui/autopilot/waypoints/")
+    end
+
     private
 
     def request(url, tries: 3)
@@ -43,6 +55,17 @@ module Crest
       @options = { headers: { Authorization: "Bearer #{token["access_token"]}" } }
       retry if (tries -= 1) > 0
       []
+    end
+
+    def send(url, tries: 3)
+      response = self.class.post(url, @options)
+      raise StandardError, '401' if response.code == 401
+    rescue StandardError, '401'
+      @logger.debug response
+      token = Crest::RefreshToken.new(@pilot.refresh_token).process
+      @pilot.update(token: token["access_token"], refresh_token: token["refresh_token"])
+      @options = { headers: { Authorization: "Bearer #{token["access_token"]}" } }
+      retry if (tries -= 1) > 0
     end
   end
 
