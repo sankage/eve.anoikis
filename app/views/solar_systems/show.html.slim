@@ -21,7 +21,10 @@ div.tabs
 
 div.row
   div.solar_system__details
-    h2 = @system.name
+    h2
+      => @system.name
+      span
+        = link_to "Set destination", set_destination_solar_system_path(@system.system)
     dl
       - if @system.wormhole?
         dt System Effect
@@ -48,7 +51,6 @@ div.row
               li.distances
                 strong = name.titleize
                 | : #{distance}
-    = link_to "Set destination", set_destination_solar_system_path(@systen.system)
    
   div.solar_system__notes
     h2 Notes
