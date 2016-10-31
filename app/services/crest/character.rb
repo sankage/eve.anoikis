@@ -36,9 +36,10 @@ module Crest
         first: false,
         solarSystem: {
           href: "https://crest-tq.eveonline.com/solarsystems/#{solar_system_id}/",
-          id: solar_system_id
+          id: solar_system_id.to_i
         }
-      }
+      }.to_json
+      @options[:headers]['Content-Type'] = 'application/json'
       send("/#{@pilot.character_id}/ui/autopilot/waypoints/")
     end
 
