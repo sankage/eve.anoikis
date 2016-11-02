@@ -198,7 +198,11 @@ $(document).on "turbolinks:load", ->
 
   $(".edit_signature").on "ajax:success", (e, data) ->
     anoikis.process_signature_json(data)
-  $(".new_signature").on "ajax:success", -> $(".new_signature")[0].reset()
+  $(".new_signature").on "ajax:success", ->
+    new_sig = $(".new_signature")
+    new_sig[0].reset()
+    new_sig.find(".optional").addClass("hidden")
+    new_sig.hide()
   $(".signatures").on "change", "[name='signature[group]']", ->
     type = "list--" + $(this).val() + "s"
     form = $(this).closest("form")

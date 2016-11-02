@@ -30,6 +30,10 @@
       @include span-columns(10);
       @include omega;
     }
+    .optional {}
+    .hidden {
+      display: none;
+    }
   }
   .options {
     @include shift(2);

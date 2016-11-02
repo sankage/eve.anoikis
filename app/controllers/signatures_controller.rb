@@ -6,7 +6,8 @@ class SignaturesController < ApplicationController
     signature = solar_system.signatures.build(sig_params)
     system_object = SystemObject.new(params[:solar_system_id], current_user)
     if signature.save
-      signature.create_connections(solar_system)
+      signature.create_connections(solar_system, connection_params)
+      signature.update_connection_status(connection_status_params)
       broadcast_signatures(system_object)
       flash[:success] = "Signature added."
     else

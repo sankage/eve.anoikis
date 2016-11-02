@@ -36,3 +36,12 @@ $(document).on "click", "[data-trigger]", (event) ->
   $(".signatures--show[data-signature-id=\"#{sig_id}\"]").toggle()
   if sig_id is "new_sig"
     $(".signatures--new form").toggle()
+
+$(document).on "change", "[name='signature\[group\]']", (event) ->
+  event.preventDefault()
+  sig_group = $(this)
+  list = sig_group.closest("dl")
+  if sig_group.val() is "wormhole"
+    $(".optional", list).removeClass("hidden")
+  else
+    $(".optional", list).addClass("hidden")

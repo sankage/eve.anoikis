@@ -97,8 +97,14 @@ div.signatures
               dd = form.select :type, Signature.types.keys
               dt Group
               dd = form.select :group, Signature.groups.keys
+              dt.optional.hidden Wormhole Type
+              dd.optional.hidden = text_field_tag "connection[wh_type]", nil, list: "list--wormhole_types"
               dt Name
               dd = form.text_field :name
+              dt.optional.hidden Life
+              dd.optional.hidden = select_tag "connection_status[life]", options_for_select(ConnectionStatus.human_life)
+              dt.optional.hidden Mass
+              dd.optional.hidden = select_tag "connection_status[mass]", options_for_select(ConnectionStatus.human_mass)
             div.options
               => form.submit "Create Sig"
 
