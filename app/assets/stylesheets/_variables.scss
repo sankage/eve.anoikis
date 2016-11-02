@@ -18,3 +18,5 @@ $color-node-wh: $color-line-blue;
 $color-node-unknown: #bf5fff;
 
 $max-width: 1200px;
+
+$desktop-max-width: new-breakpoint(max-width $max-width);

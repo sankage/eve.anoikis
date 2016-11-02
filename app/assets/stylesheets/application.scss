@@ -1,4 +1,5 @@
 @import 'bourbon';
+@import "neat-helpers";
 @import 'variables';
 @import 'neat';
 @import 'base/base';
@@ -14,6 +15,9 @@ body {
 
 .container {
   @include outer-container;
+  @include media($desktop-max-width) {
+    @include pad();
+  }
 }
 
 header {
