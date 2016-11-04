@@ -16,7 +16,7 @@ class SignaturesController < ApplicationController
 
     respond_to do |format|
       format.json { render json: {
-          solar_system_id: system_object.system_id,
+          solar_system_id: system_object.id,
           type: :single_signature,
           signature_id: signature.id,
           signature: SignaturesController.render(partial: 'signatures/table_row',
@@ -53,7 +53,7 @@ class SignaturesController < ApplicationController
     end
     respond_to do |format|
       format.json { render json: {
-          solar_system_id: system_object.system_id,
+          solar_system_id: system_object.id,
           type: :single_signature,
           signature_id: signature.id,
           signature: SignaturesController.render(partial: 'signatures/table_row',
@@ -76,7 +76,7 @@ class SignaturesController < ApplicationController
     broadcast_signatures(system_object)
     respond_to do |format|
       format.json { render json: {
-          solar_system_id: system_object.system_id,
+          solar_system_id: system_object.id,
           type: :signature_removal,
           signature_id: signature.id,
           system_map: SignaturesController.render(partial: 'solar_systems/connection_map',
@@ -110,7 +110,7 @@ class SignaturesController < ApplicationController
 
   def broadcast_signatures(system_object)
     ActionCable.server.broadcast 'signatures',
-      solar_system_id: system_object.system_id,
+      solar_system_id: system_object.id,
       type: :signatures,
       signatures: SignaturesController.render(partial: 'signatures/table_rows',
                                                locals: { system: system_object }),
