@@ -78,15 +78,12 @@
   .node__information--c13 { border: 2px solid $color-node-wh; }
   .node__information---- { border: 2px solid $color-node-unknown; }
 
-  [data-status='eol']:hover,
-  [data-status='eol destab']:hover,
-  [data-status='eol critical']:hover {
+  [data-status='eol']:hover {
     animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
     transform: translate3d(0, 0, 0);
     backface-visibility: hidden;
     perspective: 1000px;
   }
-
   @keyframes shake {
     10%, 90% {
       transform: translate3d(-1px, 1px, 0);
@@ -104,6 +101,61 @@
       transform: translate3d(4px, 1px, 0);
     }
   }
+
+  [data-status='destab']:hover,
+  [data-status='critical']:hover {
+    animation: pulse 0.82s cubic-bezier(.36,.07,.19,.97) both;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+  @keyframes pulse {
+    from {
+      transform: scale3d(1, 1, 1);
+    }
+
+    50% {
+      transform: scale3d(0.85, 0.85, 0.85);
+    }
+
+    to {
+      transform: scale3d(1, 1, 1);
+    }
+  }
+  [data-status='eol destab']:hover,
+  [data-status='eol critical']:hover {
+    animation: combined 0.82s cubic-bezier(.36,.07,.19,.97) both;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+  @keyframes combined {
+    from {
+      transform: scale3d(1, 1, 1);
+    }
+    10%, 90% {
+      transform: translate3d(-1px, 1px, 0) scale3d(1, 1, 1);
+    }
+
+    20%, 80% {
+      transform: translate3d(2px, 2px, 0);
+    }
+
+    30%, 50%, 70% {
+      transform: translate3d(-4px, 3px, 0);
+    }
+
+    40%, 60% {
+      transform: translate3d(4px, 1px, 0);
+    }
+    50% {
+      transform: scale3d(0.75, 0.75, 0.75);
+    }
+    to {
+      transform: scale3d(1, 1, 1);
+    }
+  }
+
 
   .node--selected .node__information {
     background-color: $color-node-selected;
