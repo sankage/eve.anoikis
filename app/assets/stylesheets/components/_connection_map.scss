@@ -11,6 +11,7 @@
   }
   table {
     border-collapse: separate;
+    table-layout: auto;
   }
   .effect {
     font-size: 0.8em;
@@ -20,6 +21,7 @@
     vertical-align: top;
     border-bottom: 0;
     padding: 0;
+    min-width: 5rem;
   }
   .node__information {
     background-color: $color-nodes;
