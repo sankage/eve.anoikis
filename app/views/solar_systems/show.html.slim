@@ -1,5 +1,5 @@
 - provide :title, @system.name
-- provide :current_system_id, @system.system_id.to_s
+- provide :current_system_id, @system.id.to_s
 div.tabs
   ul
     - current_user.tabs.each do |tab|
@@ -23,8 +23,16 @@ div.row
   div.solar_system__details
     h2
       => @system.name
-      span
-        = link_to "Set destination", set_destination_solar_system_path(@system.system)
+      | |
+      span.link
+        =<> link_to "dotlan", "http://evemaps.dotlan.net/search?q=#{@system.name}", target: "_blank"
+      | |
+      span.link
+        =< link_to "zkillboard", "https://zkillboard.com/system/#{@system.id}", target: "_blank"
+      
+      span.destination
+        = link_to "Set destination", set_destination_solar_system_path(@system.id)
+    p = @system.region
     dl
       - if @system.wormhole?
         dt System Effect
@@ -32,7 +40,8 @@ div.row
           - if @system.effect[:name] == "no system effect"
             = @system.effect[:name]
           - else
-            a.expander-trigger.expander-hidden href="javascript:void(0)" = @system.effect[:name]
+            a.expander-trigger.expander-hidden href="javascript:void(0)"
+              = @system.effect[:name]
             div.expander-content
               ul
                 - @system.effect[:effects].each do |effect|
@@ -51,7 +60,7 @@ div.row
               li.distances
                 strong = name.titleize
                 | : #{distance}
-   
+
   div.solar_system__notes
     h2 Notes
     ul

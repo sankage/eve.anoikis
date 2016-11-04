@@ -9,7 +9,7 @@ class SystemObject
     @system.name
   end
 
-  def system_id
+  def id
     @system.id
   end
 
@@ -51,6 +51,10 @@ class SystemObject
 
   def statics
     @system.wormhole_types
+  end
+
+  def region
+    @system.region
   end
 
   def distances

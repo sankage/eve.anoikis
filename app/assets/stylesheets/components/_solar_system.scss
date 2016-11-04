@@ -1,6 +1,6 @@
 .solar_system__details {
   @include span-columns(6);
-  margin-bottom: 2em;
+  margin-bottom: 2rem;
   .distances {
     @include span-columns(2 of 6);
     @include omega(3n);
@@ -12,8 +12,12 @@
     color: green;
   }
   h2 {
-    span {
-      font-size: 0.8em;
+    margin-bottom: 0;
+    .link {
+      font-size: 0.8rem;
+    }
+    .destination {
+      font-size: 0.8rem;
       font-weight: normal;
       display: inline-block;
       float: right;
@@ -23,32 +27,32 @@
 .solar_system__notes {
   @include span-columns(6);
   @include omega;
-  margin-bottom: 2em;
+  margin-bottom: 2rem;
   li {
     border: 1px solid $color-note-border;
-    margin-bottom: 0.5em;
-    padding: 0.5em;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
     position: relative;
   }
   .author {
     position: absolute;
-    left: 0.5em;
+    left: 0.5rem;
     bottom: 0;
     color: $color-note-author;
-    font-size: 0.8em;
+    font-size: 0.8rem;
   }
   time {
     position: absolute;
-    right: 0.5em;
+    right: 0.5rem;
     top: 0;
     color: $color-note-author;
-    font-size: 0.6em;
+    font-size: 0.6rem;
   }
   .actions {
     position: absolute;
-    right: 0.5em;
+    right: 0.5rem;
     bottom: 0;
-    font-size: 0.8em;
+    font-size: 0.8rem;
   }
   textarea {
     color: $color-body-copy;
