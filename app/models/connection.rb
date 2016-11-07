@@ -8,7 +8,7 @@ class Connection < ApplicationRecord
   def destroy_inverse
     sig = inverse.signature
     inverse.destroy
-    sig.destroy
+    sig.destroy unless sig.nil?
   end
 
   def has_inverse?
