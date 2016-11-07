@@ -10,7 +10,7 @@ module SolarSystemsHelper
           f: <<~NODE
              <div class="node__information node__information--#{system_class(wh_class: ss["wormhole_class"], security: ss["security"]).downcase}"
                   data-node="#{ss["id"]}"
-                  data-status="#{status(ss["life"], ss["mass"])}">
+                  data-status="#{status(ss["life"], ss["mass"], ss["frigate_only"])}">
                #{ ss["name"] == "…" ? "" : "<a href='/systems/#{ss["id"]}'>" }
                  <h3 class="wh_class">
                    #{system_class(wh_class: ss["wormhole_class"], security: ss["security"])}
@@ -49,7 +49,7 @@ module SolarSystemsHelper
     end
   end
 
-  def status(life, mass)
+  def status(life, mass, frigate_only)
     statuses = []
     if life == 1
       statuses << "eol"
@@ -59,6 +59,9 @@ module SolarSystemsHelper
     end
     if mass == 2
       statuses << "critical"
+    end
+    if frigate_only
+      statuses << "frig"
     end
     statuses.join(" ")
   end

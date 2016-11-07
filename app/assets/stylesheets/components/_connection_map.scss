@@ -195,4 +195,10 @@
     border-left-style: dashed;
     border-right-style: dashed;
   }
+
+  .frig { border-color: $color-line-frig; }
+  .frig-vertical {
+    border-left-color: $color-line-frig;
+    border-right-color: $color-line-frig;
+  }
 }

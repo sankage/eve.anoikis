@@ -105,7 +105,7 @@ class SignaturesController < ApplicationController
 
   def connection_status_params
     return unless params[:connection_status]
-    params.require(:connection_status).permit(:life, :mass)
+    params.require(:connection_status).permit(:life, :mass, :frigate_only)
   end
 
   def broadcast_signatures(system_object)

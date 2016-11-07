@@ -114,6 +114,8 @@ div.signatures
               dd.optional.hidden = select_tag "connection_status[life]", options_for_select(ConnectionStatus.human_life)
               dt.optional.hidden Mass
               dd.optional.hidden = select_tag "connection_status[mass]", options_for_select(ConnectionStatus.human_mass)
+              dt.optional.hidden Frigate Only
+              dd.optional.hidden = check_box_tag "connection_status[frigate_only]"
             div.options
               => form.submit "Create Sig"
 

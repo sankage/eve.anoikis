@@ -7,12 +7,13 @@ class SolarSystem < ApplicationRecord
   def connection_map
     self.class.connection.select_all(%Q{
       SELECT * FROM (
-        WITH RECURSIVE map(id, parent_id, name, wormhole_class, security, effect, sig_id, mass, life, path, cycle) AS (
+        WITH RECURSIVE map(id, parent_id, name, wormhole_class, frigate_only, security, effect, sig_id, mass, life, path, cycle) AS (
           SELECT
             "id",
             0,
             "name",
             "wormhole_class",
+            false,
             "security"::numeric,
             "effect",
             ''::text,
@@ -28,6 +29,7 @@ class SolarSystem < ApplicationRecord
             "map"."id" AS "parent_id",
             coalesce("solar_systems"."name", null),
             coalesce("solar_systems"."wormhole_class", null),
+            "connection_statuses"."frigate_only",
             coalesce("solar_systems"."security", null::numeric)::numeric(2,1),
             coalesce("solar_systems"."effect", null),
             "signatures"."sig_id",
@@ -58,6 +60,7 @@ class SolarSystem < ApplicationRecord
           "signatures"."solar_system_id",
           '…' AS "name",
           "wormhole_types"."wormhole_class" AS "wormhole_class",
+          "connection_statuses"."frigate_only",
           1.0 AS "security",
           null AS "effect",
           "signatures"."sig_id",
