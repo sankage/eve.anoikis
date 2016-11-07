@@ -26,7 +26,9 @@ class Connection < ApplicationRecord
   end
 
   def create_inverse
-    self.class.create(inverse_match_options)
+    params = inverse_match_options
+    params = params.merge(wh_type: "K162") if wh_type != "K162"
+    self.class.create(params)
   end
 
   def update_wh_type(connection_params)
@@ -49,10 +51,11 @@ class Connection < ApplicationRecord
     return unless matched_signature.nil?
     desto_system = SolarSystem.find_by(name: desto_name)
     return if desto_system.nil?
-    sig = Signature.create(solar_system_id: desto_system.id,
-                                      type: :cosmic_signature,
-                                     group: :wormhole,
-                                      name: source_name)
+    sig = Signature.new(solar_system_id: desto_system.id,
+                                   type: :cosmic_signature,
+                                  group: :wormhole,
+                                   name: source_name)
+    sig.save(validate: false)
     update(matched_signature_id: sig.id)
     create_inverse
   end
