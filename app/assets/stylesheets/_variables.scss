@@ -7,6 +7,10 @@ $color-line-critial: #ff4747;
 $color-line-destab: #f5b544;
 $color-line-frig: #50d25a;
 
+$color-flare-notice: darken(#e5edf8, 20%);
+$color-flare-warning: darken(#fff6bf, 20%);
+$color-flare-critical: darken(#fbe3e4, 20%);
+
 $color-nodes: #333;
 $color-node-selected: lighten($color-line-blue, 30%);
 $color-note-border: #eee;

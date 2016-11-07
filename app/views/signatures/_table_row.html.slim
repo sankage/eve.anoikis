@@ -41,6 +41,8 @@ tr.signatures--edit data-signature-id=sig.id
         dd.optional.hidden
           = hidden_field_tag "connection_status[frigate_only]", 0
           = check_box_tag "connection_status[frigate_only]", 1, sig&.connection_status&.frigate_only
+        dt.optional.hidden Flare
+        dd.optional.hidden = select_tag "connection_status[flare]", options_for_select(ConnectionStatus.human_flare, sig&.connection_status&.flare)
       div.options
         => form.submit "Update Sig"
         =< link_to "cancel", '', data: { trigger: sig.id }

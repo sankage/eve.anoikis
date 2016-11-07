@@ -10,7 +10,8 @@ module SolarSystemsHelper
           f: <<~NODE
              <div class="node__information node__information--#{system_class(wh_class: ss["wormhole_class"], security: ss["security"]).downcase}"
                   data-node="#{ss["id"]}"
-                  data-status="#{status(ss["life"], ss["mass"], ss["frigate_only"])}">
+                  data-status="#{status(ss["life"], ss["mass"], ss["frigate_only"])}"
+                  data-flare="#{flare(ss["flare"])}">
                #{ ss["name"] == "…" ? "" : "<a href='/systems/#{ss["id"]}'>" }
                  <h3 class="wh_class">
                    #{system_class(wh_class: ss["wormhole_class"], security: ss["security"])}
@@ -64,5 +65,9 @@ module SolarSystemsHelper
       statuses << "frig"
     end
     statuses.join(" ")
+  end
+
+  def flare(flare)
+    ConnectionStatus.flares.key(flare)
   end
 end

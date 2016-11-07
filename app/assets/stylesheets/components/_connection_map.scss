@@ -201,4 +201,8 @@
     border-left-color: $color-line-frig;
     border-right-color: $color-line-frig;
   }
+
+  [data-flare='notice'] {   box-shadow: 0 0 10px 5px $color-flare-notice; }
+  [data-flare='warning'] {  box-shadow: 0 0 10px 5px $color-flare-warning; }
+  [data-flare='critical'] { box-shadow: 0 0 10px 5px $color-flare-critical; }
 }
