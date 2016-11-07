@@ -1,10 +1,12 @@
 class TabsController < ApplicationController
   def create
     tab = current_user.tabs.build(tab_params)
-    if tab.save
+    if !tab.solar_system_id.nil? && tab.save
+      current_user.tabs.update_all(active: false)
+      tab.update(active: true)
       flash["success"] = "Tab added."
     else
-      falsh["error"] = "Tab was not added."
+      flash["error"] = "Tab was not added."
     end
 
     redirect_back(fallback_location: root_path)
@@ -28,7 +30,7 @@ class TabsController < ApplicationController
   def tab_params
     items = params.require(:tab).permit(:name, :solar_system)
     ss = SolarSystem.find_by(name: items[:solar_system])
-    items[:solar_system_id] = ss.id
+    items[:solar_system_id] = ss&.id
     items.delete(:solar_system)
     items
   end
