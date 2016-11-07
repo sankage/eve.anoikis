@@ -45,17 +45,22 @@ anoikis.process_signature_json = (data) ->
       return
     when "single_signature"
       if data.solar_system_id is anoikis.current_system_id
-        selector = $(".signatures [data-signature-id=\"#{data.signature_id}\"]")
-        index = selector.index()
-        selector.remove()
-        if $(".signatures tbody tr").length
-          new_current_row = $(".signatures tbody tr:eq(#{index})")
-          if new_current_row.length
-            new_current_row.before(data.signature)
-          else
-            $(".signatures tbody tr:eq(#{index-1})").after(data.signature)
+        if data.errors
+          errors = "<p class='signatures__error'>#{data.errors.join("<br>")}</p>"
+          $(".signatures--new td:first").prepend(errors)
         else
-          $(".signatures tbody").append(data.signature)
+          $(".signatures__error").remove()
+          selector = $(".signatures [data-signature-id=\"#{data.signature_id}\"]")
+          index = selector.index()
+          selector.remove()
+          if $(".signatures tbody tr").length
+            new_current_row = $(".signatures tbody tr:eq(#{index})")
+            if new_current_row.length
+              new_current_row.before(data.signature)
+            else
+              $(".signatures tbody tr:eq(#{index-1})").after(data.signature)
+          else
+            $(".signatures tbody").append(data.signature)
       # force the sigs to reapply the proper datalist
       $("[name='signature[group]']").trigger("change")
       return
@@ -78,6 +83,7 @@ anoikis.process_signature_json = (data) ->
         $("[data-node='#{system_id}'] .pilots").addClass("active")
       $(".pilot_locations--list").empty().append(divs)
       $(".pilot_locations").show()
+      return
     when "signature_removal"
       if data.solar_system_id is anoikis.current_system_id
         $(".signatures [data-signature-id=\"#{data.signature_id}\"]").remove()
@@ -198,7 +204,8 @@ $(document).on "turbolinks:load", ->
 
   $(".edit_signature").on "ajax:success", (e, data) ->
     anoikis.process_signature_json(data)
-  $(".new_signature").on "ajax:success", ->
+  $(".new_signature").on "ajax:success", (e, data)->
+    anoikis.process_signature_json(data)
     new_sig = $(".new_signature")
     new_sig[0].reset()
     new_sig.find(".optional").addClass("hidden")

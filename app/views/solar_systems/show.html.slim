@@ -101,7 +101,7 @@ div.signatures
           = form_for [@system.system, @system.new_sig], remote: true do |form|
             dl
               dt Sig ID
-              dd = form.text_field :sig_id
+              dd = form.text_field :sig_id, placeholder: "ABC-123"
               dt Type
               dd = form.select :type, Signature.types.keys
               dt Group

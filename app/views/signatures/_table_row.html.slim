@@ -1,5 +1,15 @@
+
+- if sig.errors.any?
+  tr.signatures__error
+    td colspan="8"
+      - sig.errors.full_messages.each do |msg|
+        p = msg
 tr.signatures--show data-signature-id=sig.id
-  td = sig.sig_id&.first(3) || "???"
+  td
+    - if sig.errors[:sig_id].present?
+      | ???
+    - else
+      = sig.sig_id&.first(3) || "???"
   td = sig.type&.titleize
   td = sig.group&.titleize
   td.active_time = time_diff(Time.now, sig.created_at)
@@ -24,7 +34,7 @@ tr.signatures--edit data-signature-id=sig.id
     = form_for [sig.solar_system, sig], remote: true do |form|
       dl
         dt Sig ID
-        dd = sig.sig_id&.first(3) || form.text_field(:sig_id)
+        dd = form.text_field(:sig_id, placeholder: "ABC-123")
         dt Type
         dd = form.select :type, Signature.types.keys
         dt Group

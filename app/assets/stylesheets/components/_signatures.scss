@@ -1,5 +1,5 @@
 .signatures {
-  .signatures--show {
+  &--show {
   }
   td {
     padding: 0.25em 0;
@@ -16,6 +16,9 @@
     font-family: 'Lucida Console', Monaco, monospace;
     padding-right: 1em;
     font-size: 0.9em;
+  }
+  &__error {
+    color: $color-error;
   }
 }
 

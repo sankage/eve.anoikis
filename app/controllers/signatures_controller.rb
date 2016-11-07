@@ -10,12 +10,7 @@ class SignaturesController < ApplicationController
       signature.update_connection_status(connection_status_params)
       broadcast_signatures(system_object)
       flash[:success] = "Signature added."
-    else
-      flash[:error] = "Signature not added."
-    end
-
-    respond_to do |format|
-      format.json { render json: {
+      json_object = {
           solar_system_id: system_object.id,
           type: :single_signature,
           signature_id: signature.id,
@@ -24,7 +19,17 @@ class SignaturesController < ApplicationController
           system_map: SignaturesController.render(partial: 'solar_systems/connection_map',
                                                    locals: { solar_system: system_object })
         }
+    else
+      flash[:error] = "Signature not added."
+      json_object = {
+        solar_system_id: system_object.id,
+        type: :single_signature,
+        errors: signature.errors.full_messages
       }
+    end
+
+    respond_to do |format|
+      format.json { render json: json_object }
       format.html { redirect_to solar_system }
     end
   end
