@@ -7,7 +7,7 @@ class PilotLocation
   def groups
     @pilots.each_with_object({}) do |pilot, accum|
       unless pilot.solar_system_id.nil?
-        key = "#{pilot.solar_system_id}|#{pilot.solar_system_name}"
+        key = "#{pilot.solar_system_id}|#{pilot.solar_system_name}|#{pilot.solar_system_k_or_j}"
         accum[key] = [] if accum[key].nil?
         accum[key] << pilot.name
       end

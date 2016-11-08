@@ -5,14 +5,19 @@
   color: #fdfdfd;
   h2 {
     border-bottom: 1px solid #fdfdfd;
-    text-align: right;
+    text-align: left;
     padding: 0.5em;
     margin-bottom: 0.5em;
     &.expander-trigger {
       color: #fdfdfd;
     }
+    a {
+      font-size: 0.7rem;
+      float: right;
+    }
   }
   li {
     padding: 0 0.5em;
+    text-align: right;
   }
 }

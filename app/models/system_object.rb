@@ -57,6 +57,10 @@ class SystemObject
     @system.region
   end
 
+  def known_space
+    @system.k_or_j == "k"
+  end
+
   def distances
     return nil if @system.distance_to_jita.nil?
     %w[jita amarr dodixie rens hek stacmon].map { |name|

@@ -69,7 +69,7 @@ anoikis.process_signature_json = (data) ->
       divs = []
       opens = new Set($(".pilot_locations--list").data('open'))
       $.each data.locations, (location, pilots) ->
-        [system_id, system_name] = location.split("|")
+        [system_id, system_name, type] = location.split("|")
         system_id = parseInt(system_id, 10)
         div = $("<div class='expander' />")
         list = $("<ul class='expander-content'></ul>")
@@ -77,7 +77,13 @@ anoikis.process_signature_json = (data) ->
           list.append("<li>#{pilot}</li>")
         classes = ["expander-trigger", "expander-hidden"]
         classes.pop() if opens.has(system_id)
-        h2 = "<h2 class='#{classes.join(' ')}' data-system-id='#{system_id}'>#{system_name}</h2>"
+        h2 = $("<h2></h2>", {
+          "class": classes.join(' ')
+          data: { "system-id": system_id }
+          text: system_name
+        })
+        if type is "k"
+          h2.append("<a href='/systems/#{system_id}/set_destination' data-remote='true'>Set Desto</a>")
         div.append(h2, list)
         divs.push(div)
         $("[data-node='#{system_id}'] .pilots").addClass("active")

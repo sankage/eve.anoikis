@@ -30,8 +30,9 @@ div.row
       span.link
         =< link_to "zkillboard", "https://zkillboard.com/system/#{@system.id}", target: "_blank"
       
-      span.destination
-        = link_to "Set destination", set_destination_solar_system_path(@system.id)
+      - if @system.known_space
+        span.destination
+          = link_to "Set destination", set_destination_solar_system_path(@system.id)
     p = @system.region
     dl
       - if @system.wormhole?

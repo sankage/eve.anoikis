@@ -90,4 +90,12 @@ class SolarSystem < ApplicationRecord
   def distance_to(system_name)
     public_send("distance_to_#{system_name}".to_sym)
   end
+
+  def k_or_j
+    if (7..9).include? wormhole_class
+      "k"
+    else
+      "j"
+    end
+  end
 end
