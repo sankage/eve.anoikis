@@ -72,12 +72,12 @@ class SignaturesController < ApplicationController
   end
 
   def destroy
-    sig = Signature.find_by(id: params[:id])
-    sig.connection.destroy if sig.connection
-    sig.destroy
+    signature = Signature.find_by(id: params[:id])
+    signature.connection.destroy if signature.connection
+    signature.destroy
     flash[:error] = "Signature deleted."
 
-    system_object = SystemObject.new(sig.solar_system.id, current_user)
+    system_object = SystemObject.new(signature.solar_system.id, current_user)
     broadcast_signatures(system_object)
     respond_to do |format|
       format.json { render json: {
