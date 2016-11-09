@@ -31,7 +31,7 @@ module ESI
 
     def request(url, tries: 3)
       response = self.class.get(url, @options)
-      raise InvalidToken, '400' if response.code == 401
+      raise InvalidToken, '400' if response.code == 400
       JSON.parse(response.body)
     rescue InvalidToken, '400'
       @logger.debug response
@@ -44,7 +44,7 @@ module ESI
 
     def send(url, tries: 3)
       response = self.class.post(url, @options)
-      raise InvalidToken, '400' if response.code == 401
+      raise InvalidToken, '400' if response.code == 400
     rescue InvalidToken, '400'
       @logger.debug response
       token = ESI::RefreshToken.new(@pilot.refresh_token).process
