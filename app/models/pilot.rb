@@ -10,19 +10,19 @@ class Pilot < ApplicationRecord
   belongs_to :solar_system, optional: true
 
   def get_location
-    update(solar_system_id: crest_character.location.system_id)
+    update(solar_system_id: api_character.location_id)
   end
 
   def is_member_of_alliance?
-    corp = crest_character.corporation
-    alliance_corps = ::Crest::Alliance.new.member_corps
-    alliance_corps.map(&:id).include? corp.id
+    corp_id = api_character.corporation_id
+    alliance_corp_ids = ::ESI::Alliance.new.member_corp_ids
+    alliance_corp_ids.include? corp_id
   end
 
   def name
     saved_name = read_attribute(:name)
     if saved_name.nil?
-      crest_name = crest_character.name
+      crest_name = api_character.name
       update(name: crest_name)
       saved_name = crest_name
     end
@@ -49,5 +49,9 @@ class Pilot < ApplicationRecord
 
   def crest_character
     @crest ||= ::Crest::Character.new(self)
+  end
+
+  def api_character
+    @api ||= ::ESI::Character.new(self)
   end
 end
