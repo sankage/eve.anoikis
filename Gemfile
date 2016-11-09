@@ -51,7 +51,7 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-gem 'omniauth-crest', '~> 1.2'
+gem 'omniauth-eve_sso', '~> 0.1.0'
 gem 'high_voltage', '~> 3.0'
 gem 'slim', '~> 3.0', '>= 3.0.7'
 gem 'httparty', '~> 0.13.7'
