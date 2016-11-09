@@ -1,9 +1,13 @@
 module SolarSystemsHelper
   def generate_map(map_data)
+    duplicate_nodes = []
     map_data.map.with_index { |ss, i|
       if ss["id"] == 0
         ss["id"] = "unmapped-#{i}"
       end
+      identifier = "#{ss["parent_id"]}|#{ss["sig_id"]}"
+      next if duplicate_nodes.include? identifier
+      duplicate_nodes << identifier
       [
         {
           v: "#{ss["id"]}",
@@ -28,7 +32,7 @@ module SolarSystemsHelper
         },
         ss["parent_id"] == 0 ? "" : "#{ss["parent_id"]}"
       ]
-    }.to_json
+    }.compact.to_json
   end
 
   private
