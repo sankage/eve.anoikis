@@ -63,7 +63,7 @@ module ESI
     end
 
     def process
-      auth = Base64.strict_encode64("#{Rails.application.secrets.esi_id}:#{Rails.application.secrets.esi_secret}")
+      auth = Base64.strict_encode64("#{Rails.application.secrets.sso_id}:#{Rails.application.secrets.sso_secret}")
       headers = { Authorization: "Basic #{auth}" }
       response = self.class.post("/oauth/token", headers: headers,
                                  body: { grant_type: 'refresh_token',

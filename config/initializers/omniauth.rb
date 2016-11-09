@@ -1,4 +1,4 @@
 Rails.application.config.middleware.use OmniAuth::Builder do
-  provider :crest, ENV['CLIENT_ID'], ENV['SECRET_KEY'],
+  provider :eve_sso, ENV['SSO_ID'], ENV['SSO_SECRET'],
     scope: 'characterLocationRead characterNavigationWrite remoteClientUI'
 end
