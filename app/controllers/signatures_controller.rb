@@ -55,18 +55,25 @@ class SignaturesController < ApplicationController
       signature.create_connections(solar_system, connection_params)
       signature.update_connection_status(connection_status_params)
       broadcast_signatures(system_object)
-    end
-    respond_to do |format|
-      format.json { render json: {
-          solar_system_id: system_object.id,
-          type: :single_signature,
-          signature_id: signature.id,
-          signature: SignaturesController.render(partial: 'signatures/table_row',
-                                                  locals: { sig: signature }),
-          system_map: SignaturesController.render(partial: 'solar_systems/connection_map',
-                                                   locals: { solar_system: system_object })
-        }
+      json_object = {
+        solar_system_id: system_object.id,
+        type: :single_signature,
+        signature_id: signature.id,
+        signature: SignaturesController.render(partial: 'signatures/table_row',
+                                                locals: { sig: signature }),
+        system_map: SignaturesController.render(partial: 'solar_systems/connection_map',
+                                                 locals: { solar_system: system_object })
       }
+    else
+      json_object = {
+        solar_system_id: system_object.id,
+        type: :single_signature,
+        errors: signature.errors.full_messages
+      }
+    end
+
+    respond_to do |format|
+      format.json { render json: json_object }
       format.html { redirect_to solar_system }
     end
   end

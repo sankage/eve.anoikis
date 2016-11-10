@@ -44,7 +44,8 @@ class Signature < ApplicationRecord
                 :combat_site ]
 
   validates :sig_id, format: { with: /\A[A-Z]{3}-[0-9]{3}\z/,
-                            message: "ID requires both letters and numbers (ABC-123)" }
+                            message: "ID requires both letters and numbers (ABC-123)" },
+                     allow_nil: true
 
   def create_connections(solar_system, connection_params = nil)
     return unless wormhole?
