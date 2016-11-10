@@ -50,7 +50,7 @@ module Crest
       raise StandardError, '401' if response.code == 401
       JSON.parse(response.body)
     rescue StandardError, '401'
-      @logger.warn { url: url, response: response }
+      @logger.warn({ url: url, response: response })
       token = Crest::RefreshToken.new(@pilot.refresh_token).process
       @pilot.update(token: token["access_token"], refresh_token: token["refresh_token"])
       @options = { headers: { Authorization: "Bearer #{token["access_token"]}" } }
@@ -62,7 +62,7 @@ module Crest
       response = self.class.post(url, @options)
       raise StandardError, '401' if response.code == 401
     rescue StandardError, '401'
-      @logger.warn { url: url, response: response }
+      @logger.warn({ url: url, response: response })
       token = Crest::RefreshToken.new(@pilot.refresh_token).process
       @pilot.update(token: token["access_token"], refresh_token: token["refresh_token"])
       @options = { headers: { Authorization: "Bearer #{token["access_token"]}" } }
