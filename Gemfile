@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 ruby "2.3.1"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.0.0'
+gem 'rails', '~> 5.0.0.1'
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 0.18'
 # Use Puma as the app server
@@ -12,7 +12,7 @@ gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails', '~> 4.2.0'
+gem 'coffee-rails', '~> 4.2'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 gem 'therubyracer', platforms: :ruby
 
@@ -54,10 +54,9 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'omniauth-crest', '~> 1.2'
 gem 'high_voltage', '~> 3.0'
 gem 'slim', '~> 3.0', '>= 3.0.7'
-gem 'httparty', '~> 0.13.7'
-gem 'bourbon', '~> 5.0.0.beta.6'
+gem 'httparty', '~> 0.14.0'
+gem 'bourbon', '~> 5.0.0.beta.7'
 gem 'neat', '~> 1.8'
 
-gem 'sinatra', github: 'sinatra/sinatra'
-gem 'rack-protection', github: 'sinatra/rack-protection'
-gem 'sidekiq', '~> 4.1', '>= 4.1.4'
+gem 'sinatra', '~> 2.0.0.beta2'
+gem 'sidekiq', '~> 4.2', '>= 4.2.5'
