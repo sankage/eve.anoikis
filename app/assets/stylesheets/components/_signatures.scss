@@ -11,11 +11,15 @@
   .life {    width: 10%; }
   .mass {    width: 15%; }
   .options { width:  7%; }
-  .active_time {
+  .active_time,
+  .time_to_die {
     text-align: right;
     font-family: 'Lucida Console', Monaco, monospace;
     padding-right: 1em;
     font-size: 0.9em;
+  }
+  .time_to_die {
+    color: $color-error;
   }
   &__error {
     color: $color-error;

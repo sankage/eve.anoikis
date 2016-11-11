@@ -62,6 +62,11 @@ class Signature < ApplicationRecord
 
   def update_connection_status(params)
     return if params.nil? || connection_status.nil?
+    if params["life"] == "end_of_life"
+      params[:eol_start] = Time.now
+    else
+      params[:eol_start] = nil
+    end
     connection_status.update(params)
   end
 end
