@@ -79,7 +79,7 @@ anoikis.process_signature_json = (data) ->
         classes.pop() if opens.has(system_id)
         h2 = $("<h2></h2>", {
           "class": classes.join(' ')
-          data: { "system-id": system_id }
+          attr: { "data-system-id": system_id }
           text: system_name
         })
         if type is "k"
