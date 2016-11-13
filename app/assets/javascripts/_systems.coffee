@@ -87,6 +87,25 @@ anoikis.process_signature_json = (data) ->
         div.append(h2, list)
         divs.push(div)
         $("[data-node='#{system_id}'] .pilots").addClass("active")
+      link = $("<a></a>", {
+        "class": "pilot_locations__show_all"
+        href: "javascript:void(0)"
+        text: "Toggle all systems"
+        on:
+          click: (event) ->
+            event.preventDefault()
+            list = $(".pilot_locations--list")
+            opens = $.map $(".expander-trigger", list), (trigger, _) ->
+              !$(trigger).hasClass("expander-hidden")
+            some_open = opens.some (val) -> val
+            every_open = opens.every (val) -> val
+            if some_open and not every_open
+              $(".expander-trigger.expander-hidden", list).trigger("click")
+            else
+              $(".expander-trigger", list).trigger("click")
+            return
+      })
+      divs.push link
       $(".pilot_locations--list").empty().append(divs)
       $(".pilot_locations").show()
       return

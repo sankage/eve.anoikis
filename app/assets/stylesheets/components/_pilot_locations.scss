@@ -1,23 +1,26 @@
 .pilot_locations {
   display: none;
-}
-.pilot_locations--list {
-  color: #fdfdfd;
-  h2 {
-    border-bottom: 1px solid #fdfdfd;
-    text-align: left;
-    padding: 0.5em;
-    margin-bottom: 0.5em;
-    &.expander-trigger {
-      color: #fdfdfd;
+  &--list {
+    color: #fdfdfd;
+    h2 {
+      border-bottom: 1px solid #fdfdfd;
+      text-align: left;
+      padding: 0.5em;
+      margin-bottom: 0.5em;
+      &.expander-trigger {
+        color: #fdfdfd;
+      }
+      a {
+        font-size: 0.7rem;
+        float: right;
+      }
     }
-    a {
-      font-size: 0.7rem;
-      float: right;
+    li {
+      padding: 0 0.5em;
+      text-align: right;
     }
   }
-  li {
-    padding: 0 0.5em;
-    text-align: right;
+  &__show_all {
+    margin-left: 0.5em;
   }
 }
