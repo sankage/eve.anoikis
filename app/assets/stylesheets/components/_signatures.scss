@@ -11,15 +11,50 @@
   .life {    width: 10%; }
   .mass {    width: 15%; }
   .options { width:  7%; }
-  .active_time,
-  .time_to_die {
-    text-align: right;
-    font-family: 'Lucida Console', Monaco, monospace;
-    padding-right: 1em;
-    font-size: 0.9em;
-  }
-  .time_to_die {
-    color: $color-error;
+  .signature__age {
+    position: relative;
+    .active_time,
+    .time_to_die {
+      text-align: right;
+      font-family: 'Lucida Console', Monaco, monospace;
+      padding-right: 1em;
+      font-size: 0.9em;
+    }
+
+    .time_to_die {
+      color: $color-error;
+      cursor: pointer;
+    }
+    .time_to_die + .active_time { display: none; }
+    .time_to_die:hover {
+      + .active_time {
+        display: block;
+        position: absolute;
+        top: -2.1rem;
+        left: -0.5rem;
+        background-color: tint($color-background, 10%);
+        padding: 0.25rem 0.5rem;
+        border: 1px solid $color-note-border;
+        &::before {
+          content: "";
+          border-left: 18px solid transparent;
+          border-right: 18px solid transparent;
+          border-top: 9px solid $color-note-border;
+          position: absolute;
+          bottom: -9px;
+          left: 10px;
+        }
+        &::after {
+          content: "";
+          border-left: 16px solid transparent;
+          border-right: 16px solid transparent;
+          border-top: 8px solid tint($color-background, 10%);
+          position: absolute;
+          bottom: -8px;
+          left: 12px;
+        }
+      }
+    }
   }
   &__error {
     color: $color-error;

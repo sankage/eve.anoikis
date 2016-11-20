@@ -12,10 +12,10 @@ tr.signatures--show data-signature-id=sig.id
       = sig.sig_id&.first(3) || "???"
   td = sig.type&.titleize
   td = sig.group&.titleize
-  - if sig.connection_status&.eol_start
-    td.time_to_die = time_diff(sig.connection_status.eol_start + 4.hours, Time.now)
-  - else
-    td.active_time = time_diff(Time.now, sig.created_at)
+  td.signature__age
+    - if sig.connection_status&.eol_start
+      span.time_to_die = time_diff(sig.connection_status.eol_start + 4.hours, Time.now)
+    span.active_time = time_diff(Time.now, sig.created_at)
   td *(!sig.wormhole? ? {colspan: 3 } : {})
     - if sig.connection
       => sig.connection.wh_type
