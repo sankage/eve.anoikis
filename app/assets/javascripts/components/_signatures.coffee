@@ -17,6 +17,6 @@ $(document).on "turbolinks:load", ->
       minutes = if (minutes < 10) then "0" + minutes else minutes
       hours = if (hours < 10) then "0" + hours else hours
       if time_to_death < 0
-        hours = -hours
+        hours = "-#{hours}"
       $(this).text([hours, minutes].join(":"))
   window.setInterval(update_sig_ages, 60000)

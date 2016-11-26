@@ -4,7 +4,7 @@ module SignaturesHelper
     diff = (start_time - end_time).round
     hours = diff.abs / 3600
     dt = DateTime.strptime(diff.abs.to_s, "%s").utc
-    hours = -hours if diff < 0
+    hours = "-#{hours}" if diff < 0
     "#{hours}:#{dt.strftime("%M")}"
   end
 end
