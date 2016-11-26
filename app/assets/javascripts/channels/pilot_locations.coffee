@@ -1,4 +1,4 @@
-App.signatures = App.cable.subscriptions.create "SignaturesChannel",
+App.signatures = App.cable.subscriptions.create "PilotLocationsChannel",
   connected: ->
     # Called when the subscription is ready for use on the server
 
@@ -8,4 +8,4 @@ App.signatures = App.cable.subscriptions.create "SignaturesChannel",
   received: (data) ->
     # Called when there's incoming data on the websocket for this channel
     console.log data
-    anoikis.process_signature_json(data)
+    anoikis.process_locations(data)

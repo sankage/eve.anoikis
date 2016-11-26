@@ -20,7 +20,7 @@ Rails.application.routes.draw do
 
   require 'sidekiq/web'
 
-  constraints lambda {|request|  Pilot.find_by(id: request.session["pilot_id"])&.admin? } do
+  constraints lambda { |request| Pilot.find_by(id: request.cookie_jar.signed[:pilot_id])&.admin? } do
     mount Sidekiq::Web => '/admin/sidekiq'
   end
 end
