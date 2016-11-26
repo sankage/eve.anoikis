@@ -11,7 +11,7 @@ module SolarSystemsHelper
       [
         {
           v: "#{ss["id"]}",
-          f: <<~NODE
+          f: <<~NODE.gsub(/^[\s\t]*/, '').gsub(/[\s\t]*\n/, ' ').strip
              <div class="node__information node__information--#{system_class(wh_class: ss["wormhole_class"], security: ss["security"]).downcase}"
                   data-node="#{ss["id"]}"
                   data-status="#{status(ss["life"], ss["mass"], ss["frigate_only"])}"

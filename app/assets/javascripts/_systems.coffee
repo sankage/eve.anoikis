@@ -34,7 +34,10 @@ anoikis.drawChart = ->
 anoikis.process_signature_json = (data) ->
   if data.solar_system_id is anoikis.current_system_id
     if data.system_map
-      $("#mapper").empty().append(data.system_map)
+      # Update the attribute, as a call to .data doesn't do this
+      $("#mapper .connection_map").attr("data-map", JSON.parse(data.system_map))
+      # Update the .data object since that is what is being queried against
+      $("#mapper .connection_map").data("map", JSON.parse(data.system_map))
       anoikis.drawChart()
   switch data.type
     when "signatures"

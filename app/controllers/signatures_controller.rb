@@ -16,8 +16,7 @@ class SignaturesController < ApplicationController
           signature_id: signature.id,
           signature: SignaturesController.render(partial: 'signatures/table_row',
                                                   locals: { sig: signature }),
-          system_map: SignaturesController.render(partial: 'solar_systems/connection_map',
-                                                   locals: { solar_system: system_object })
+          system_map: helpers.generate_map(system_object.connection_map)
         }
     else
       flash[:error] = "Signature not added."
@@ -61,8 +60,7 @@ class SignaturesController < ApplicationController
         signature_id: signature.id,
         signature: SignaturesController.render(partial: 'signatures/table_row',
                                                 locals: { sig: signature }),
-        system_map: SignaturesController.render(partial: 'solar_systems/connection_map',
-                                                 locals: { solar_system: system_object })
+        system_map: helpers.generate_map(system_object.connection_map)
       }
     else
       json_object = {
@@ -91,8 +89,7 @@ class SignaturesController < ApplicationController
           solar_system_id: system_object.id,
           type: :signature_removal,
           signature_id: signature.id,
-          system_map: SignaturesController.render(partial: 'solar_systems/connection_map',
-                                                   locals: { solar_system: system_object })
+          system_map: helpers.generate_map(system_object.connection_map)
         }
       }
       format.html { redirect_to solar_system }
@@ -121,12 +118,12 @@ class SignaturesController < ApplicationController
   end
 
   def broadcast_signatures(system_object)
+    # TODO: see if this system_object is part of the root
     ActionCable.server.broadcast 'signatures',
       solar_system_id: system_object.id,
       type: :signatures,
       signatures: SignaturesController.render(partial: 'signatures/table_rows',
                                                locals: { system: system_object }),
-      system_map: SignaturesController.render(partial: 'solar_systems/connection_map',
-                                               locals: { solar_system: system_object })
+      system_map: helpers.generate_map(system_object.connection_map)
   end
 end
