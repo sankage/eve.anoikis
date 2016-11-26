@@ -9,7 +9,7 @@ class SignaturesController < ApplicationController
       signature.create_connections(solar_system, connection_params)
       signature.update_connection_status(connection_status_params)
       broadcast_signatures(system_object)
-      broadcast_system_map(system_object)
+      broadcast_system_map(system_object) if signature.wormhole?
       flash[:success] = "Signature added."
       json_object = {
           solar_system_id: system_object.id,
@@ -56,7 +56,7 @@ class SignaturesController < ApplicationController
       signature.create_connections(solar_system, connection_params)
       signature.update_connection_status(connection_status_params)
       broadcast_signatures(system_object)
-      broadcast_system_map(system_object)
+      broadcast_system_map(system_object) if signature.wormhole?
       json_object = {
         solar_system_id: system_object.id,
         type: :single_signature,
@@ -87,7 +87,7 @@ class SignaturesController < ApplicationController
 
     system_object = SystemObject.new(signature.solar_system.id, current_user)
     broadcast_signatures(system_object)
-    broadcast_system_map(system_object)
+    broadcast_system_map(system_object) if signature.wormhole?
     respond_to do |format|
       format.json { render json: {
           solar_system_id: system_object.id,
@@ -132,6 +132,6 @@ class SignaturesController < ApplicationController
   def broadcast_system_map(system_object)
     ActionCable.server.broadcast 'system_map',
       solar_system_id: system_object.id,
-      system_map: helpers.generate_map(system_object.connection_map)
+      system_map: :updated
   end
 end

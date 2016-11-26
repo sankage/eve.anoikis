@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     end
     resources :notes, only: [:create, :destroy]
     get "set_destination", on: :member
+    get "get_map", on: :member
   end
 
   resources :tabs, only: [:create, :destroy] do

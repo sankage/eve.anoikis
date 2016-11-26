@@ -32,13 +32,19 @@ anoikis.drawChart = ->
       anoikis.mark_line(node.data("node"), node.data("parent"), status)
 
 anoikis.process_system_map = (data) ->
-  if data.solar_system_id is anoikis.current_system_id
-    if data.system_map
-      # Update the attribute, as a call to .data doesn't do this
-      $("#mapper .connection_map").attr("data-map", JSON.parse(data.system_map))
-      # Update the .data object since that is what is being queried against
-      $("#mapper .connection_map").data("map", JSON.parse(data.system_map))
-      anoikis.drawChart()
+  return unless data.system_map is "updated"
+  ajax = $.ajax({
+    url: "/systems/#{anoikis.current_system_id}/get_map"
+    method: "get"
+    dataType: "json"
+  })
+  ajax.done (data) ->
+    return unless data.system_map
+    # Update the attribute, as a call to .data doesn't do this
+    $("#mapper .connection_map").attr("data-map", JSON.parse(data.system_map))
+    # Update the .data object since that is what is being queried against
+    $("#mapper .connection_map").data("map", JSON.parse(data.system_map))
+    anoikis.drawChart()
 
 
 $(document).on "click", ".pilot_locations--list .expander-trigger", ->
