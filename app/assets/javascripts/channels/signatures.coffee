@@ -8,4 +8,4 @@ App.signatures = App.cable.subscriptions.create "SignaturesChannel",
   received: (data) ->
     # Called when there's incoming data on the websocket for this channel
     console.info "signature data received"
-    anoikis.process_signature_json(data)
+    anoikis.process_signatures(data)

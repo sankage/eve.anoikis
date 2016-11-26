@@ -2,16 +2,16 @@ window.anoikis ||= {}
 google.charts.load('current', { packages:["orgchart"] })
 
 anoikis.drawChart = ->
-  data = new google.visualization.DataTable()
-  data.addColumn('string', 'Name')
-  data.addColumn('string', 'Parent')
+  anoikis.chart_data = new google.visualization.DataTable()
+  anoikis.chart_data.addColumn('string', 'Name')
+  anoikis.chart_data.addColumn('string', 'Parent')
 
   connection_map = $("#mapper .connection_map")
 
-  rows = connection_map.data("map")
+  row_list = connection_map.data("map")
   selected = connection_map.data("selected") + ""
-  for row in rows
-    row_index = data.addRow(row)
+  for row in row_list
+    row_index = anoikis.chart_data.addRow(row)
     selected_row = row_index if row[0]["v"] is selected
 
   anoikis.chart = new google.visualization.OrgChart(connection_map[0])
@@ -19,7 +19,7 @@ anoikis.drawChart = ->
   google.visualization.events.addListener anoikis.chart, 'ready', set_selection_override
   google.visualization.events.addListener anoikis.chart, 'select', set_selection_override
 
-  anoikis.chart.draw(data, {
+  anoikis.chart.draw(anoikis.chart_data, {
     allowHtml: true,
     allowCollapse: true,
     nodeClass: "node",
@@ -31,7 +31,7 @@ anoikis.drawChart = ->
     if status.length
       anoikis.mark_line(node.data("node"), node.data("parent"), status)
 
-anoikis.process_signature_json = (data) ->
+anoikis.process_system_map = (data) ->
   if data.solar_system_id is anoikis.current_system_id
     if data.system_map
       # Update the attribute, as a call to .data doesn't do this
@@ -39,38 +39,7 @@ anoikis.process_signature_json = (data) ->
       # Update the .data object since that is what is being queried against
       $("#mapper .connection_map").data("map", JSON.parse(data.system_map))
       anoikis.drawChart()
-  switch data.type
-    when "signatures"
-      if data.solar_system_id is anoikis.current_system_id
-        $(".signatures tbody").empty().append(data.signatures)
-      # force the sigs to reapply the proper datalist
-      $("[name='signature[group]']").trigger("change")
-      return
-    when "single_signature"
-      if data.solar_system_id is anoikis.current_system_id
-        if data.errors
-          errors = "<p class='signatures__error'>#{data.errors.join("<br>")}</p>"
-          $(".signatures--new td:first").prepend(errors)
-        else
-          $(".signatures__error").remove()
-          selector = $(".signatures [data-signature-id=\"#{data.signature_id}\"]")
-          index = selector.index()
-          selector.remove()
-          if $(".signatures tbody tr").length
-            new_current_row = $(".signatures tbody tr:eq(#{index})")
-            if new_current_row.length
-              new_current_row.before(data.signature)
-            else
-              $(".signatures tbody tr:eq(#{index-1})").after(data.signature)
-          else
-            $(".signatures tbody").append(data.signature)
-      # force the sigs to reapply the proper datalist
-      $("[name='signature[group]']").trigger("change")
-      return
-    when "signature_removal"
-      if data.solar_system_id is anoikis.current_system_id
-        $(".signatures [data-signature-id=\"#{data.signature_id}\"]").remove()
-      return
+
 
 $(document).on "click", ".pilot_locations--list .expander-trigger", ->
   system_id = $(this).data("system-id")

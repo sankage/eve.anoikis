@@ -1,3 +1,5 @@
+window.anoikis ||= {}
+
 $(window).on "paste", (event) ->
   return if event.target.tagName.toLowerCase() is 'input'
   event.preventDefault()
@@ -45,3 +47,36 @@ $(document).on "change", "[name='signature\[group\]']", (event) ->
     $(".optional", list).removeClass("hidden")
   else
     $(".optional", list).addClass("hidden")
+
+anoikis.process_signatures = (data) ->
+  return unless data.solar_system_id is anoikis.current_system_id
+  switch data.type
+    when "signatures"
+      $(".signatures tbody").empty().append(data.signatures)
+      # force the sigs to reapply the proper datalist
+      $("[name='signature[group]']").trigger("change")
+      return
+    when "single_signature"
+      if data.errors
+        errors = "<p class='signatures__error'>#{data.errors.join("<br>")}</p>"
+        $(".signatures--new td:first").prepend(errors)
+      else
+        $(".signatures__error").remove()
+        selector = $(".signatures [data-signature-id=\"#{data.signature_id}\"]")
+        index = selector.index()
+        selector.remove()
+        if $(".signatures tbody tr").length
+          new_current_row = $(".signatures tbody tr:eq(#{index})")
+          if new_current_row.length
+            new_current_row.before(data.signature)
+          else
+            $(".signatures tbody tr:eq(#{index-1})").after(data.signature)
+        else
+          $(".signatures tbody").append(data.signature)
+      # force the sigs to reapply the proper datalist
+      $("[name='signature[group]']").trigger("change")
+      return
+    when "signature_removal"
+      $(".signatures [data-signature-id=\"#{data.signature_id}\"]").remove()
+      return
+  return

@@ -9,6 +9,7 @@ class SignaturesController < ApplicationController
       signature.create_connections(solar_system, connection_params)
       signature.update_connection_status(connection_status_params)
       broadcast_signatures(system_object)
+      broadcast_system_map(system_object)
       flash[:success] = "Signature added."
       json_object = {
           solar_system_id: system_object.id,
@@ -38,6 +39,7 @@ class SignaturesController < ApplicationController
                                      params[:signatures])
     system_object = SystemObject.new(params[:solar_system_id], current_user)
     broadcast_signatures(system_object)
+    broadcast_system_map(system_object)
     render json: { success: true }
   end
 
@@ -54,6 +56,7 @@ class SignaturesController < ApplicationController
       signature.create_connections(solar_system, connection_params)
       signature.update_connection_status(connection_status_params)
       broadcast_signatures(system_object)
+      broadcast_system_map(system_object)
       json_object = {
         solar_system_id: system_object.id,
         type: :single_signature,
@@ -84,6 +87,7 @@ class SignaturesController < ApplicationController
 
     system_object = SystemObject.new(signature.solar_system.id, current_user)
     broadcast_signatures(system_object)
+    broadcast_system_map(system_object)
     respond_to do |format|
       format.json { render json: {
           solar_system_id: system_object.id,
@@ -118,12 +122,16 @@ class SignaturesController < ApplicationController
   end
 
   def broadcast_signatures(system_object)
-    # TODO: see if this system_object is part of the root
     ActionCable.server.broadcast 'signatures',
       solar_system_id: system_object.id,
       type: :signatures,
       signatures: SignaturesController.render(partial: 'signatures/table_rows',
-                                               locals: { system: system_object }),
+                                               locals: { system: system_object })
+  end
+
+  def broadcast_system_map(system_object)
+    ActionCable.server.broadcast 'system_map',
+      solar_system_id: system_object.id,
       system_map: helpers.generate_map(system_object.connection_map)
   end
 end
