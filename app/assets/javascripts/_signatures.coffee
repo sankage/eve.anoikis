@@ -48,6 +48,21 @@ $(document).on "change", "[name='signature\[group\]']", (event) ->
   else
     $(".optional", list).addClass("hidden")
 
+$(document).on "turbolinks:load", ->
+  $(".edit_signature").on "ajax:success", (e, data) ->
+    anoikis.process_signatures(data)
+  $(".new_signature").on "ajax:success", (e, data)->
+    anoikis.process_signatures(data)
+    new_sig = $(".new_signature")
+    new_sig[0].reset()
+    new_sig.find(".optional").addClass("hidden")
+    new_sig.hide()
+  $(".signatures").on "change", "[name='signature[group]']", ->
+    type = "list--" + $(this).val() + "s"
+    form = $(this).closest("form")
+    $("[name='signature[name]']", form).attr("list", type)
+  $("[name='signature[group]']").trigger("change")
+
 anoikis.process_signatures = (data) ->
   return unless data.solar_system_id is anoikis.current_system_id
   switch data.type

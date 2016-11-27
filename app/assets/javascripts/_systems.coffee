@@ -161,17 +161,3 @@ $(document).on "turbolinks:load", ->
   connection_map = $("#mapper .connection_map")
   if connection_map.length
     google.charts.setOnLoadCallback(anoikis.drawChart)
-
-  $(".edit_signature").on "ajax:success", (e, data) ->
-    anoikis.process_signature_json(data)
-  $(".new_signature").on "ajax:success", (e, data)->
-    anoikis.process_signature_json(data)
-    new_sig = $(".new_signature")
-    new_sig[0].reset()
-    new_sig.find(".optional").addClass("hidden")
-    new_sig.hide()
-  $(".signatures").on "change", "[name='signature[group]']", ->
-    type = "list--" + $(this).val() + "s"
-    form = $(this).closest("form")
-    $("[name='signature[name]']", form).attr("list", type)
-  $("[name='signature[group]']").trigger("change")
