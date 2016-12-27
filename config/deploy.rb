@@ -2,7 +2,7 @@
 lock '3.6.1'
 
 set :application, 'anoikis'
-set :repo_url, 'git@github.com:sankage/eve.anoikis.git'
+set :repo_url, 'git@github.com:EmberSands/eve.anoikis.git'
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
