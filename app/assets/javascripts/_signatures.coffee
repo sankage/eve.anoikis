@@ -2,6 +2,7 @@ window.anoikis ||= {}
 
 $(window).on "paste", (event) ->
   return if event.target.tagName.toLowerCase() is 'input'
+  return if event.target.tagName.toLowerCase() is 'textarea'
   event.preventDefault()
   data = if window.clipboardData
     window.clipboardData.getData("Text")
