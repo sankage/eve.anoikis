@@ -26,7 +26,7 @@ require 'capistrano/rails'
 require 'capistrano/sidekiq'
 
 set :rbenv_type, :user # or :system, depends on your rbenv setup
-set :rbenv_ruby, '2.3.1'
+set :rbenv_ruby, '2.4.0'
 
 # Load custom tasks from `lib/capistrano/tasks` if you have any defined
 Dir.glob("lib/capistrano/tasks/*.rake").each { |r| import r }
