@@ -1,0 +1,30 @@
+.distance_ui {
+  margin-top: 5rem;
+  h3 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  .sources,
+  .actions {
+    @include span-columns(6);
+  }
+  .source {
+    padding: 1rem 2rem;
+    border: 2px solid transparent;
+    margin-bottom: 0.5rem;
+    @include span-columns(3 of 6);
+    @include omega(2n);
+    &--hs {
+      border-color: $color-node-hs;
+      background-color: tint($color-node-hs, 40%);
+    }
+    &--ls {
+      border-color: $color-node-ls;
+      background-color: tint($color-node-ls, 40%);
+    }
+    &--ns {
+      border-color: $color-node-ns;
+      background-color: tint($color-node-ns, 40%);
+    }
+  }
+}

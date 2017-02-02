@@ -128,4 +128,12 @@ div.container
     div.sliding-panel-fade-screen
 
   div.distance_ui.hidden
-    button type="button" Calculate arbitrary distances
+    h2 Distance Calculation
+    div.sources
+      h3 Current K-space Connections
+      ul
+    div.actions
+      h3 Destination
+      = select_tag "destination"
+      button.distance_calculation Calculate shortest route
+    
