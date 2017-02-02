@@ -126,3 +126,14 @@ div.container
     button.sliding-panel-button type="button" Click for pilot locations
     div.sliding-panel-content.pilot_locations--list
     div.sliding-panel-fade-screen
+
+  div.distance_ui.hidden
+    h2 Distance Calculation
+    div.sources
+      h3 Current K-space Connections
+      ul
+    div.actions
+      h3 Destination
+      = select_tag "destination"
+      button.distance_calculation Calculate shortest route
+    
