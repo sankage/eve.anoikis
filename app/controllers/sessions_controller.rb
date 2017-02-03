@@ -8,6 +8,7 @@ class SessionsController < ApplicationController
     pilot = Pilot.find_and_update(character_id: auth['uid'],
                                    credentials: auth['credentials'])
     if pilot&.is_member_of_alliance?
+      pilot.update(member: true)
       sign_in pilot
     else
       flash[:alert] = "You are not authorized to be here."
