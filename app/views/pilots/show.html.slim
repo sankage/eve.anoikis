@@ -1,0 +1,11 @@
+- provide :title, @pilot.name
+div.container
+  h1 Pilot – #{@pilot.name}
+  
+  = link_to "Link an Alt", ""
+  - unless @pilot.pilots.empty?
+    h2 Alternate Pilots
+    ul
+      - @pilot.pilots.each do |alt_pilot|
+        li = alt_pilot.name
+  

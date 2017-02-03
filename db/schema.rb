@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170202233626) do
+ActiveRecord::Schema.define(version: 20170203042218) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "alt_pilots", force: :cascade do |t|
+    t.integer  "pilot_id"
+    t.integer  "alt_pilot_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["alt_pilot_id"], name: "index_alt_pilots_on_alt_pilot_id", using: :btree
+    t.index ["pilot_id"], name: "index_alt_pilots_on_pilot_id", using: :btree
+  end
 
   create_table "connection_statuses", force: :cascade do |t|
     t.integer  "mass",         default: 0
@@ -120,6 +129,8 @@ ActiveRecord::Schema.define(version: 20170202233626) do
     t.integer  "wormhole_class"
   end
 
+  add_foreign_key "alt_pilots", "alt_pilots"
+  add_foreign_key "alt_pilots", "pilots"
   add_foreign_key "connections", "connection_statuses"
   add_foreign_key "connections", "signatures"
   add_foreign_key "connections", "signatures", column: "matched_signature_id"

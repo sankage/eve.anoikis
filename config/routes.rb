@@ -17,6 +17,8 @@ Rails.application.routes.draw do
     get "switch", on: :member
   end
 
+  resources :pilots, only: [:show]
+
   mount ActionCable.server => "/cable"
 
   require 'sidekiq/web'
