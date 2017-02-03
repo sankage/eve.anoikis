@@ -3,7 +3,7 @@ class MemberCheckJob < ApplicationJob
 
   def perform(*args)
     Pilot.find_each do |pilot|
-      if pilot.is_member_of_alliance?
+      if pilot.token && pilot.is_member_of_alliance?
         pilot.update(member: true)
       else
         pilot.update(member: false)
