@@ -10,7 +10,7 @@ module ApplicationCable
 
     def find_verified_user
       ActiveRecord::Base.connection_pool.with_connection do
-        if current_user = Pilot.find_by(id: cookies.signed[:pilot_id])
+        if current_user = Pilot.find_by(id: cookies.signed[:pilot_id], member: true)
           current_user
         else
           reject_unauthorized_connection
