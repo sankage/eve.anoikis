@@ -18,6 +18,7 @@ html
         nav
           ul
             - if signed_in?
+              li = link_to "Account", pilot_path(current_user)
               li = link_to "Sign out", signout_path, method: :delete
             - else
               li = link_to "Sign in w/ EVE SSO", signin_path

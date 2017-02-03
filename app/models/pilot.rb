@@ -7,6 +7,8 @@ class Pilot < ApplicationRecord
   end
 
   has_many :tabs
+  has_many :alt_pilots
+  has_many :pilots, through: :alt_pilots
   belongs_to :solar_system, optional: true
 
   def get_location
